@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 优惠券信息
  *
@@ -30,16 +29,19 @@ public class CouponController {
     @Autowired
     private CouponService couponService;
 
-
-
-
+    @RequestMapping("/member/list")
+    public Result membercoupons() {
+        CouponEntity couponEntity = new CouponEntity();
+        couponEntity.setCouponName("满100减10");
+        return Result.ok().put("coupons", Arrays.asList(couponEntity));
+    }
 
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = couponService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -50,8 +52,8 @@ public class CouponController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		CouponEntity coupon = couponService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        CouponEntity coupon = couponService.getById(id);
 
         return Result.ok().put("coupon", coupon);
     }
@@ -60,8 +62,8 @@ public class CouponController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody CouponEntity coupon){
-		couponService.save(coupon);
+    public Result save(@RequestBody CouponEntity coupon) {
+        couponService.save(coupon);
 
         return Result.ok();
     }
@@ -70,8 +72,8 @@ public class CouponController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody CouponEntity coupon){
-		couponService.updateById(coupon);
+    public Result update(@RequestBody CouponEntity coupon) {
+        couponService.updateById(coupon);
 
         return Result.ok();
     }
@@ -80,8 +82,8 @@ public class CouponController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		couponService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        couponService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
