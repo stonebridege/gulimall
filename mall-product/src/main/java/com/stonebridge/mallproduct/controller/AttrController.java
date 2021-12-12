@@ -16,12 +16,13 @@ import com.common.utils.PageUtils;
 import com.common.utils.R;
 
 
+
 /**
  * 商品属性
  *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
- * @date 2021-12-11 10:16:59
+ * @date 2021-12-11 23:49:31
  */
 @RestController
 @RequestMapping("mallproduct/attr")
@@ -33,7 +34,7 @@ public class AttrController {
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params) {
+    public R list(@RequestParam Map<String, Object> params){
         PageUtils page = attrService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -44,8 +45,8 @@ public class AttrController {
      * 信息
      */
     @RequestMapping("/info/{attrId}")
-    public R info(@PathVariable("attrId") Long attrId) {
-        AttrEntity attr = attrService.getById(attrId);
+    public R info(@PathVariable("attrId") Long attrId){
+		AttrEntity attr = attrService.getById(attrId);
 
         return R.ok().put("attr", attr);
     }
@@ -54,8 +55,8 @@ public class AttrController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrEntity attr) {
-        attrService.save(attr);
+    public R save(@RequestBody AttrEntity attr){
+		attrService.save(attr);
 
         return R.ok();
     }
@@ -64,8 +65,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr) {
-        attrService.updateById(attr);
+    public R update(@RequestBody AttrEntity attr){
+		attrService.updateById(attr);
 
         return R.ok();
     }
@@ -74,8 +75,8 @@ public class AttrController {
      * 删除
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] attrIds) {
-        attrService.removeByIds(Arrays.asList(attrIds));
+    public R delete(@RequestBody Long[] attrIds){
+		attrService.removeByIds(Arrays.asList(attrIds));
 
         return R.ok();
     }

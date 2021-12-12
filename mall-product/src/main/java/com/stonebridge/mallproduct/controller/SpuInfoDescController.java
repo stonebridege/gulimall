@@ -22,7 +22,7 @@ import com.common.utils.R;
  *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
- * @date 2021-12-11 10:16:58
+ * @date 2021-12-11 23:49:30
  */
 @RestController
 @RequestMapping("mallproduct/spuinfodesc")

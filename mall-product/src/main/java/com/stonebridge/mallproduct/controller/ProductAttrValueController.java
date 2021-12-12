@@ -3,7 +3,6 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ import com.common.utils.R;
  *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
- * @date 2021-12-11 10:16:59
+ * @date 2021-12-11 23:49:31
  */
 @RestController
 @RequestMapping("mallproduct/productattrvalue")
@@ -35,7 +34,6 @@ public class ProductAttrValueController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("mallproduct:productattrvalue:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = productAttrValueService.queryPage(params);
 
@@ -47,7 +45,6 @@ public class ProductAttrValueController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("mallproduct:productattrvalue:info")
     public R info(@PathVariable("id") Long id){
 		ProductAttrValueEntity productAttrValue = productAttrValueService.getById(id);
 
@@ -58,7 +55,6 @@ public class ProductAttrValueController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("mallproduct:productattrvalue:save")
     public R save(@RequestBody ProductAttrValueEntity productAttrValue){
 		productAttrValueService.save(productAttrValue);
 
@@ -69,7 +65,6 @@ public class ProductAttrValueController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("mallproduct:productattrvalue:update")
     public R update(@RequestBody ProductAttrValueEntity productAttrValue){
 		productAttrValueService.updateById(productAttrValue);
 
@@ -80,7 +75,6 @@ public class ProductAttrValueController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("mallproduct:productattrvalue:delete")
     public R delete(@RequestBody Long[] ids){
 		productAttrValueService.removeByIds(Arrays.asList(ids));
 

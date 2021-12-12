@@ -3,7 +3,6 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ import com.common.utils.R;
  *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
- * @date 2021-12-11 10:16:58
+ * @date 2021-12-11 23:49:30
  */
 @RestController
 @RequestMapping("mallproduct/spuinfo")
@@ -35,7 +34,6 @@ public class SpuInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("mallproduct:spuinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuInfoService.queryPage(params);
 
@@ -47,7 +45,6 @@ public class SpuInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("mallproduct:spuinfo:info")
     public R info(@PathVariable("id") Long id){
 		SpuInfoEntity spuInfo = spuInfoService.getById(id);
 
@@ -58,7 +55,6 @@ public class SpuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("mallproduct:spuinfo:save")
     public R save(@RequestBody SpuInfoEntity spuInfo){
 		spuInfoService.save(spuInfo);
 
@@ -69,7 +65,6 @@ public class SpuInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("mallproduct:spuinfo:update")
     public R update(@RequestBody SpuInfoEntity spuInfo){
 		spuInfoService.updateById(spuInfo);
 
@@ -80,7 +75,6 @@ public class SpuInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("mallproduct:spuinfo:delete")
     public R delete(@RequestBody Long[] ids){
 		spuInfoService.removeByIds(Arrays.asList(ids));
 

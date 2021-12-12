@@ -3,7 +3,6 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ import com.common.utils.R;
  *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
- * @date 2021-12-11 10:16:58
+ * @date 2021-12-11 23:49:30
  */
 @RestController
 @RequestMapping("mallproduct/spucomment")
@@ -35,7 +34,6 @@ public class SpuCommentController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("mallproduct:spucomment:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuCommentService.queryPage(params);
 
@@ -47,7 +45,6 @@ public class SpuCommentController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("mallproduct:spucomment:info")
     public R info(@PathVariable("id") Long id){
 		SpuCommentEntity spuComment = spuCommentService.getById(id);
 
@@ -58,7 +55,6 @@ public class SpuCommentController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("mallproduct:spucomment:save")
     public R save(@RequestBody SpuCommentEntity spuComment){
 		spuCommentService.save(spuComment);
 
@@ -69,7 +65,6 @@ public class SpuCommentController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("mallproduct:spucomment:update")
     public R update(@RequestBody SpuCommentEntity spuComment){
 		spuCommentService.updateById(spuComment);
 
@@ -80,7 +75,6 @@ public class SpuCommentController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("mallproduct:spucomment:delete")
     public R delete(@RequestBody Long[] ids){
 		spuCommentService.removeByIds(Arrays.asList(ids));
 
