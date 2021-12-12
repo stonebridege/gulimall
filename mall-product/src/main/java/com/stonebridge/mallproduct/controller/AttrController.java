@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stonebridge.mallproduct.entity.AttrEntity;
 import com.stonebridge.mallproduct.service.AttrService;
 import com.common.utils.PageUtils;
-import com.common.utils.R;
+import com.common.utils.Result;
 
 
 
@@ -34,10 +34,10 @@ public class AttrController {
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params){
         PageUtils page = attrService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return Result.ok().put("page", page);
     }
 
 
@@ -45,40 +45,40 @@ public class AttrController {
      * 信息
      */
     @RequestMapping("/info/{attrId}")
-    public R info(@PathVariable("attrId") Long attrId){
+    public Result info(@PathVariable("attrId") Long attrId){
 		AttrEntity attr = attrService.getById(attrId);
 
-        return R.ok().put("attr", attr);
+        return Result.ok().put("attr", attr);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrEntity attr){
+    public Result save(@RequestBody AttrEntity attr){
 		attrService.save(attr);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
+    public Result update(@RequestBody AttrEntity attr){
 		attrService.updateById(attr);
 
-        return R.ok();
+        return Result.ok();
     }
 
     /**
      * 删除
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] attrIds){
+    public Result delete(@RequestBody Long[] attrIds){
 		attrService.removeByIds(Arrays.asList(attrIds));
 
-        return R.ok();
+        return Result.ok();
     }
 
 }
