@@ -1,6 +1,6 @@
 # nacos配置
-server:
-  port: 1000
+#server:
+#  port: 1000
 spring:
   application:
     name: mall-coupon
@@ -11,3 +11,18 @@ spring:
       config:
         file-extension: yaml
         server-addr: localhost:8848
+        namespace: 848eddce-a879-497e-8e2f-392d7967f8d5
+        group: dev
+        extension-configs[0].data-id: datasource.yaml
+        extension-configs[0].group: dev
+        extension-configs[0].refresh: true
+        extension-configs[1].data-id: mybatis.yaml
+        extension-configs[1].group: dev
+        extension-configs[1].refresh: true
+        extension-configs[2].data-id: other.yaml
+        extension-configs[2].group: dev
+        extension-configs[2].refresh: true
+
+#  spring.cloud.nacos.config.extension-configs[0].data-id=blade.yaml
+#  spring.cloud.nacos.config.extension-configs[0].group=DEFAULT_GROUP
+#  spring.cloud.nacos.config.extension-configs[0].refresh=true
