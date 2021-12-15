@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 65f96fe3-3af4-4478-a225-c345c818207a
+  application:
+    name: mall-gateway
