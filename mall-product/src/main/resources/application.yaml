@@ -6,8 +6,6 @@ spring:
     username: root
     url: jdbc:mysql://47.101.59.14:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
-  application:
-    name: mall-product
   cloud:
     nacos:
       discovery:

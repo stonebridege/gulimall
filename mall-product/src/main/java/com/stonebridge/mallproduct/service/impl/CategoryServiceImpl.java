@@ -32,7 +32,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     /**
-     * 查出所有分类，将其组装父子的树形结构
+     * 查出所有商品分类，根据父子节点关系将其组装父子的树形结构
      *
      * @return
      */
@@ -43,11 +43,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //2.组装成父子的树形结构
         //2.1.找到所有的以及分类
         List<CategoryEntity> leve1Menus = list.stream().filter((categoryEntity) ->
+                //2.2.获取所有的根节点，即parentCid为0
                 categoryEntity.getParentCid() == 0
         ).map((meau) -> {
+            //2.3.设置当前根节点的子节点
             meau.setChildren(getChildren(meau, list));
             return meau;
         }).sorted((menu1, menu2) -> {
+            //2.4.排序
             return (menu1.getSort() == null ? 0 : menu1.getSort()) - (menu2.getSort() == null ? 0 : menu2.getSort());
         }).collect(Collectors.toList());
         return leve1Menus;
@@ -56,8 +59,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     /**
      * 递归查找当前菜单以及所有子菜单
      *
-     * @param category
-     * @param alllist
+     * @param rootCategory :根节点
+     * @param alllist ：所有的节点
      * @return
      */
     private List<CategoryEntity> getChildren(CategoryEntity rootCategory, List<CategoryEntity> alllist) {
