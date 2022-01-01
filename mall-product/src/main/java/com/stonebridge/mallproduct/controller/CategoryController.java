@@ -1,20 +1,17 @@
 package com.stonebridge.mallproduct.controller;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stonebridge.mallproduct.entity.CategoryEntity;
 import com.stonebridge.mallproduct.service.CategoryService;
-import com.common.utils.PageUtils;
 import com.common.utils.Result;
-
 
 
 /**
@@ -33,11 +30,10 @@ public class CategoryController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
-
-        return Result.ok().put("page", page);
+    @RequestMapping("/list/tree")
+    public Result list() {
+        List<CategoryEntity> list = categoryService.listWithTree();
+        return Result.ok().put("data", list);
     }
 
 
@@ -45,8 +41,8 @@ public class CategoryController {
      * 信息
      */
     @RequestMapping("/info/{catId}")
-    public Result info(@PathVariable("catId") Long catId){
-		CategoryEntity category = categoryService.getById(catId);
+    public Result info(@PathVariable("catId") Long catId) {
+        CategoryEntity category = categoryService.getById(catId);
 
         return Result.ok().put("category", category);
     }
@@ -55,8 +51,8 @@ public class CategoryController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody CategoryEntity category){
-		categoryService.save(category);
+    public Result save(@RequestBody CategoryEntity category) {
+        categoryService.save(category);
 
         return Result.ok();
     }
@@ -65,8 +61,8 @@ public class CategoryController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+    public Result update(@RequestBody CategoryEntity category) {
+        categoryService.updateById(category);
 
         return Result.ok();
     }
@@ -75,8 +71,8 @@ public class CategoryController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+    public Result delete(@RequestBody Long[] catIds) {
+        categoryService.removeByIds(Arrays.asList(catIds));
 
         return Result.ok();
     }
