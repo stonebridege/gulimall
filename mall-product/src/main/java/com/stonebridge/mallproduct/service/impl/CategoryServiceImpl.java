@@ -60,7 +60,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      * 递归查找当前菜单以及所有子菜单
      *
      * @param rootCategory :根节点
-     * @param alllist ：所有的节点
+     * @param alllist      ：所有的节点
      * @return
      */
     private List<CategoryEntity> getChildren(CategoryEntity rootCategory, List<CategoryEntity> alllist) {
@@ -73,6 +73,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             return (menu1.getSort() == null ? 0 : menu1.getSort()) - (menu2.getSort() == null ? 0 : menu2.getSort());
         }).collect(Collectors.toList());
         return list;
+    }
+
+    @Override
+    public void removeMenuByIds(List<Long> asList) {
+        //TODO
+        baseMapper.deleteBatchIds(asList);
     }
 
 }
