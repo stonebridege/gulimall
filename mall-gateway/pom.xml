@@ -8,7 +8,7 @@
         <version>2.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.stonebridge</groupId>
+    <groupId>com.stonebridge.mall</groupId>
     <artifactId>mall-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mall-gateway</name>
@@ -22,6 +22,12 @@
             <groupId>com.stonebridge.mall</groupId>
             <artifactId>mail-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>druid-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
