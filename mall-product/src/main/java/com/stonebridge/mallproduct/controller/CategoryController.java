@@ -68,6 +68,15 @@ public class CategoryController {
     }
 
     /**
+     * 批量修改
+     */
+    @RequestMapping("/update/sort")
+    public Result update(@RequestBody CategoryEntity[] arrayCategory) {
+        categoryService.updateBatchById(Arrays.asList(arrayCategory));
+        return Result.ok();
+    }
+
+    /**
      * 删除
      */
     @RequestMapping("/delete")
