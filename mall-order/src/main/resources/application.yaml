@@ -4,7 +4,7 @@ spring:
   datasource:
     password: 123456
     username: root
-    url: jdbc:mysql://47.101.59.14:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://121.40.181.197:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: mall-order
