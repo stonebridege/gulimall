@@ -18,5 +18,6 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>mail-common</module>
+        <module>mall-third-party</module>
     </modules>
 </project>
