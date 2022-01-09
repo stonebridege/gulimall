@@ -10,11 +10,6 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848 #配置Nacos地址
-    alicloud:
-      access-key: LTAI5tABipxw153Ucj1R6Hds
-      secret-key: BXbJ3TDjMfEW6mNlzECh5LctgMmdoE
-      oss:
-        endpoint: oss-cn-shanghai.aliyuncs.com
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:

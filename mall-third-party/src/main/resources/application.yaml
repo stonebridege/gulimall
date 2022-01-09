@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #??Nacos??
+  application:
+    name: mall-third-party
+server:
+  port: 6000

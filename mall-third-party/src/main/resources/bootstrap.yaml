@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: 5d4225ac-a09d-41a8-b035-58568d317126
+        extension-configs:
+          - dataId: oss.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+      discovery:
+        server-addr: localhost:8848 #配置Nacos地址
