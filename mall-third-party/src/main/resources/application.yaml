@@ -6,4 +6,4 @@ spring:
   application:
     name: mall-third-party
 server:
-  port: 6000
+  port: 7000
