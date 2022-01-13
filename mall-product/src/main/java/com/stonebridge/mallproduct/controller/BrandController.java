@@ -1,13 +1,12 @@
 package com.stonebridge.mallproduct.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.common.vaild.AddGroup;
 import com.common.vaild.UpdateGroup;
+import com.common.vaild.UpdateStatusGroup;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +18,6 @@ import com.stonebridge.mallproduct.entity.BrandEntity;
 import com.stonebridge.mallproduct.service.BrandService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
-
-import javax.validation.Valid;
 
 
 /**
@@ -72,6 +69,15 @@ public class BrandController {
      */
     @RequestMapping("/update")
     public Result update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
+        brandService.updateById(brand);
+        return Result.ok();
+    }
+
+    /**
+     * 修改状态
+     */
+    @RequestMapping("/update/status")
+    public Result updateStatus(@Validated({UpdateStatusGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
         return Result.ok();
     }
