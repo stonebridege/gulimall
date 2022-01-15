@@ -33,10 +33,9 @@ public class AttrGroupController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrGroupService.queryPage(params);
-
+    @RequestMapping("/list/{cateLogId}")
+    public Result list(@RequestParam Map<String, Object> params, @PathVariable("cateLogId") Long cateLogId) {
+        PageUtils page = attrGroupService.queryPage(params, cateLogId);
         return Result.ok().put("page", page);
     }
 
