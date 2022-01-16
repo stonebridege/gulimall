@@ -37,7 +37,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         } else {
             String key = (String) params.get("key");
             //SELECT attr_group_id,attr_group_name,sort,descript,icon,catelog_id FROM pms_attr_group WHERE (catelog_id = ? AND (attr_group_id = ? OR attr_group_name LIKE ?))
-            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", key);
+            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId);
             if (!StrUtil.isEmpty(key)) {
                 wrapper.and((obj) -> {
                     obj.eq("attr_group_id", key).or().like("attr_group_name", key);

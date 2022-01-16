@@ -2,9 +2,7 @@ package com.stonebridge.mallproduct.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -79,6 +77,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void removeMenuByIds(List<Long> asList) {
         //TODO
         baseMapper.deleteBatchIds(asList);
+    }
+
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPaths = this.findParentPath(catelogId, paths);
+        Collections.reverse(parentPaths);
+        return parentPaths.toArray(new Long[paths.size()]);
+    }
+
+    private List<Long> findParentPath(long catelogId, List<Long> paths) {
+        paths.add(catelogId);
+        CategoryEntity categoryId = this.getById(catelogId);
+        if (categoryId.getParentCid() != 0) {
+            findParentPath(categoryId.getParentCid(), paths);
+        }
+        return paths;
     }
 
 }
