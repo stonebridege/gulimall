@@ -1,14 +1,12 @@
 package com.stonebridge.mallproduct.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallproduct.entity.CategoryBrandRelationEntity;
 import com.stonebridge.mallproduct.service.CategoryBrandRelationService;
@@ -40,6 +38,17 @@ public class CategoryBrandRelationController {
         return Result.ok().put("page", page);
     }
 
+    /**
+     * 列表
+     */
+    @GetMapping("/catelog/list")
+    public Result catelogList(@RequestParam("brandId") Long brandId) {
+        QueryWrapper<CategoryBrandRelationEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("brand_id", brandId);
+        List<CategoryBrandRelationEntity> list = categoryBrandRelationService.list(queryWrapper);
+        return Result.ok().put("data", list);
+    }
+
 
     /**
      * 信息
@@ -56,8 +65,7 @@ public class CategoryBrandRelationController {
      */
     @RequestMapping("/save")
     public Result save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
-
+		categoryBrandRelationService.saveDetail(categoryBrandRelation);
         return Result.ok();
     }
 
