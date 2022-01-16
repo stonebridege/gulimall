@@ -29,20 +29,27 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         return new PageUtils(page);
     }
 
+    /**
+     * 查询属性分组表时，增加模糊匹配
+     * @param params
+     * @param catelogId
+     * @return
+     */
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+        String key = (String) params.get("key");
+        //SELECT attr_group_id,attr_group_name,sort,descript,icon,catelog_id FROM pms_attr_group WHERE (catelog_id = ? AND (attr_group_id = ? OR attr_group_name LIKE ?))
+        QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
+        if (!StrUtil.isEmpty(key)) {
+            wrapper.and((obj) -> {
+                obj.eq("attr_group_id", key).or().like("attr_group_name", key);
+            });
+        }
         if (catelogId == 0) {
-            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), new QueryWrapper<AttrGroupEntity>());
+            IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
             return new PageUtils(page);
         } else {
-            String key = (String) params.get("key");
-            //SELECT attr_group_id,attr_group_name,sort,descript,icon,catelog_id FROM pms_attr_group WHERE (catelog_id = ? AND (attr_group_id = ? OR attr_group_name LIKE ?))
-            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId);
-            if (!StrUtil.isEmpty(key)) {
-                wrapper.and((obj) -> {
-                    obj.eq("attr_group_id", key).or().like("attr_group_name", key);
-                });
-            }
+            wrapper.eq("catelog_id", catelogId);
             IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
             return new PageUtils(page);
         }
