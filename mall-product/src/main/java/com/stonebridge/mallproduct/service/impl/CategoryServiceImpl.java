@@ -1,5 +1,8 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.common.utils.StrUtil;
+import com.stonebridge.mallproduct.service.CategoryBrandRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,6 +21,8 @@ import com.stonebridge.mallproduct.service.CategoryService;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -85,6 +90,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<Long> parentPaths = this.findParentPath(catelogId, paths);
         Collections.reverse(parentPaths);
         return parentPaths.toArray(new Long[paths.size()]);
+    }
+
+    /**
+     * 商品分类数据（CategoryEntity）进行更新，除了pms_category表进行更新；
+     * 使用冗余存储的pms_category_brand_relation表中的catelog_name和cateLog字段进行更新
+     *
+     * @param category CategoryEntity对象
+     */
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        if (!StrUtil.isEmpty(category.getName())) {
+            categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        }
     }
 
     private List<Long> findParentPath(long catelogId, List<Long> paths) {

@@ -65,11 +65,13 @@ public class BrandController {
 
 
     /**
-     * 修改
+     * 当对品牌信息进行修改的时候
+     * @param brand ：BrandEntity对象
+     * @return
      */
     @RequestMapping("/update")
     public Result update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+        brandService.updateDetail(brand);
         return Result.ok();
     }
 
