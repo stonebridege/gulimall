@@ -3,6 +3,7 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.stonebridge.mallproduct.vo.AttrRespVo;
 import com.stonebridge.mallproduct.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,15 +55,16 @@ public class AttrController {
         return Result.ok().put("page", page);
     }
 
-
     /**
-     * 信息
+     * 修改参数信息时，回显要修改的数据
+     *
+     * @param attrId 属性id
+     * @return 数据集
      */
     @RequestMapping("/info/{attrId}")
-    public Result info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
-
-        return Result.ok().put("attr", attr);
+    public Result info(@PathVariable("attrId") Long attrId) {
+        AttrRespVo attrRespVo = attrService.getAttrInfo(attrId);
+        return Result.ok().put("attr", attrRespVo);
     }
 
     /**

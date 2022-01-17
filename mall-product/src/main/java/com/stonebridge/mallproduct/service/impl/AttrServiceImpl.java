@@ -7,6 +7,7 @@ import com.stonebridge.mallproduct.dao.CategoryDao;
 import com.stonebridge.mallproduct.entity.AttrAttrgroupRelationEntity;
 import com.stonebridge.mallproduct.entity.AttrGroupEntity;
 import com.stonebridge.mallproduct.entity.CategoryEntity;
+import com.stonebridge.mallproduct.service.CategoryService;
 import com.stonebridge.mallproduct.vo.AttrRespVo;
 import com.stonebridge.mallproduct.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +23,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.common.utils.PageUtils;
 import com.common.utils.Query;
-
 import com.stonebridge.mallproduct.dao.AttrDao;
 import com.stonebridge.mallproduct.entity.AttrEntity;
 import com.stonebridge.mallproduct.service.AttrService;
@@ -40,6 +40,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     @Autowired
     CategoryDao categoryDao;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -109,7 +112,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
                 attrRespVo.setGroupName(attrGroup.getAttrGroupName());
             }
-            // 3.4.关联pms_category的分类名称pms_attr.catelog_id。关联查询即可
+            // 3.4.关联pms_category的分类名称，根据pms_attr.catelog_id关联查询即可
             CategoryEntity category = categoryDao.selectById(attrEntity.getCatelogId());
             if (category != null) {
                 attrRespVo.setCatelogName(category.getName());
@@ -118,5 +121,34 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         })).collect(Collectors.toList());
         pageUtils.setList(attrRespVoList);
         return pageUtils;
+    }
+
+    /**
+     * 修改参数时回显所有数据
+     * @param attrId ：参数的id
+     * @return ：数据集
+     */
+    @Override
+    public AttrRespVo getAttrInfo(Long attrId) {
+        //1.查询当前属性的详细信息
+        AttrRespVo attrRespVo = new AttrRespVo();
+        AttrEntity attrEntity = this.getById(attrId);
+        BeanUtils.copyProperties(attrEntity, attrRespVo);
+        //2.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联。再查询pms_category.groupName数据
+        AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+        attrRespVo.setAttrGroupId(relationEntity.getAttrGroupId());
+        if (StrUtil.isEmpty(relationEntity)) {
+            AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(relationEntity.getAttrGroupId()));
+            attrRespVo.setGroupName(attrGroup.getAttrGroupName());
+        }
+        //3.关联pms_category的分类名称，根据pms_attr.catelog_id关联查询即可
+        Long catelogId = attrEntity.getCatelogId();
+        Long[] catelogPath = categoryService.findCatelogPath(catelogId);
+        attrRespVo.setCatelogPath(catelogPath);
+        CategoryEntity categoryEntity = categoryService.getById(catelogId);
+        if (categoryEntity != null) {
+            attrRespVo.setCatelogName(categoryEntity.getName());
+        }
+        return attrRespVo;
     }
 }
