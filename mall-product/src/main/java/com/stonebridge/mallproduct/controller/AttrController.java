@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.stonebridge.mallproduct.entity.AttrEntity;
 import com.stonebridge.mallproduct.service.AttrService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
@@ -78,12 +77,11 @@ public class AttrController {
     }
 
     /**
-     * 修改
+     * 修改保存属性数据
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
-
+    public Result update(@RequestBody AttrVo attrVo) {
+        attrService.updateAttr(attrVo);
         return Result.ok();
     }
 

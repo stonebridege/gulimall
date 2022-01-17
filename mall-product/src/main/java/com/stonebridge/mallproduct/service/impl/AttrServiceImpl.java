@@ -1,5 +1,6 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.common.utils.StrUtil;
 import com.stonebridge.mallproduct.dao.AttrAttrgroupRelationDao;
 import com.stonebridge.mallproduct.dao.AttrGroupDao;
@@ -125,6 +126,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 修改参数时回显所有数据
+     *
      * @param attrId ：参数的id
      * @return ：数据集
      */
@@ -137,7 +139,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         //2.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联。再查询pms_category.groupName数据
         AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
         attrRespVo.setAttrGroupId(relationEntity.getAttrGroupId());
-        if (StrUtil.isEmpty(relationEntity)) {
+        if (relationEntity != null) {
             AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(relationEntity.getAttrGroupId()));
             attrRespVo.setGroupName(attrGroup.getAttrGroupName());
         }
@@ -150,5 +152,27 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             attrRespVo.setCatelogName(categoryEntity.getName());
         }
         return attrRespVo;
+    }
+
+    /**
+     * 修改保存属性数据，以及更新与属性分组表的关系表pms_attr_attrgroup_relation
+     * @param attrVo：
+     */
+    @Override
+    public void updateAttr(AttrVo attrVo) {
+        //1.更新属性表pms_attr数据
+        AttrEntity attrEntity = new AttrEntity();
+        BeanUtils.copyProperties(attrVo, attrEntity);
+        this.updateById(attrEntity);
+        //2.更新保存关系表pms_attr_attrgroup_relation数据
+        AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
+        relationEntity.setAttrGroupId(attrVo.getAttrGroupId());
+        relationEntity.setAttrId(attrVo.getAttrId());
+        Integer count = relationDao.selectCount(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
+        if (count > 0) {
+            relationDao.update(relationEntity, new UpdateWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
+        } else {
+            relationDao.insert(relationEntity);
+        }
     }
 }
