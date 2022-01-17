@@ -41,6 +41,19 @@ public class AttrController {
         return Result.ok().put("page", page);
     }
 
+    /**
+     * 查询查询条件查询属性表（pms_attr）的数据
+     *
+     * @param params    ：参数
+     * @param catelogId ：分类的id（pms_category.id）
+     * @return :结果集
+     */
+    @RequestMapping("/base/list/{catelogId}")
+    public Result baseList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId) {
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+        return Result.ok().put("page", page);
+    }
+
 
     /**
      * 信息

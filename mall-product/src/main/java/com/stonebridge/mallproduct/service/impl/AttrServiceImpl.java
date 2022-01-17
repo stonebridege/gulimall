@@ -1,12 +1,22 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.common.utils.StrUtil;
 import com.stonebridge.mallproduct.dao.AttrAttrgroupRelationDao;
+import com.stonebridge.mallproduct.dao.AttrGroupDao;
+import com.stonebridge.mallproduct.dao.CategoryDao;
 import com.stonebridge.mallproduct.entity.AttrAttrgroupRelationEntity;
+import com.stonebridge.mallproduct.entity.AttrGroupEntity;
+import com.stonebridge.mallproduct.entity.CategoryEntity;
+import com.stonebridge.mallproduct.vo.AttrRespVo;
 import com.stonebridge.mallproduct.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -25,11 +35,17 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Autowired
     AttrAttrgroupRelationDao relationDao;
 
+    @Autowired
+    AttrGroupDao attrGroupDao;
+
+    @Autowired
+    CategoryDao categoryDao;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrEntity> page = this.page(
                 new Query<AttrEntity>().getPage(params),
-                new QueryWrapper<AttrEntity>()
+                new QueryWrapper<>()
         );
 
         return new PageUtils(page);
@@ -37,6 +53,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 保存属性值时保存到属性表（pms_attr）和保存到和属性分组表（pms_attr_group）到关联关系表中pms_attr_attrgroup_relation
+     *
      * @param attr
      */
     @Transactional
@@ -51,5 +68,55 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         relationEntity.setAttrGroupId(attr.getAttrGroupId());
         relationEntity.setAttrId(attrEntity.getAttrId());
         relationDao.insert(relationEntity);
+    }
+
+    /**
+     * 根据条件查询pms_attr表中数据
+     *
+     * @param params    ：参数
+     * @param catelogId ：分类的id（pms_category.id）
+     * @return ：数据集
+     */
+    @Override
+    public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId) {
+        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<>();
+
+        //1.如果分组id为0,则表示分组id不作为条件查询所有的属性
+        if (catelogId != 0) {
+            queryWrapper.eq("catelog_id", catelogId);
+        }
+        //2.如果用户输入关键字作为查询条件，则进行模糊匹配查询。同时匹配attr_id和attr_name
+        String key = StrUtil.trim(params.get("key"));
+        if (!StrUtil.isEmpty(key)) {
+            queryWrapper.and((wrapper) -> {
+                wrapper.eq("attr_id", key).or().like("attr_name", key);
+            });
+        }
+        //3.从pms_attr查询数据后，前台除了显示pms_attr数据外还需要显示；
+        // - 关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联
+        // - 关联pms_category的分类名称pms_attr.catelog_id。关联查询即可
+        // 3.1.查询出pms_attr的数据
+        IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
+        PageUtils pageUtils = new PageUtils(page);
+        List<AttrEntity> attrEntityList = page.getRecords();
+        // 3.2.遍历查询出pms_attr的数
+        List<AttrRespVo> attrRespVoList = attrEntityList.stream().map((attrEntity -> {
+            AttrRespVo attrRespVo = new AttrRespVo();
+            BeanUtils.copyProperties(attrEntity, attrRespVo);
+            // 3.3.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联
+            AttrAttrgroupRelationEntity attrgroupRelationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+            if (attrgroupRelationEntity != null) {
+                AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
+                attrRespVo.setGroupName(attrGroup.getAttrGroupName());
+            }
+            // 3.4.关联pms_category的分类名称pms_attr.catelog_id。关联查询即可
+            CategoryEntity category = categoryDao.selectById(attrEntity.getCatelogId());
+            if (category != null) {
+                attrRespVo.setCatelogName(category.getName());
+            }
+            return attrRespVo;
+        })).collect(Collectors.toList());
+        pageUtils.setList(attrRespVoList);
+        return pageUtils;
     }
 }
