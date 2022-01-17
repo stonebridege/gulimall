@@ -46,11 +46,14 @@ public class AttrController {
      *
      * @param params    ：参数
      * @param catelogId ：分类的id（pms_category.id）
+     * @param attrType : 当为sale的时候查询<销售属性>attr_type=0，当为base的时候查询<所有属性>
      * @return :结果集
      */
-    @RequestMapping("/base/list/{catelogId}")
-    public Result baseList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId) {
-        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+    @RequestMapping("/{attrType}/list/{catelogId}")
+    public Result baseList(@RequestParam Map<String, Object> params,
+                           @PathVariable("catelogId") Long catelogId,
+                           @PathVariable("attrType") String attrType) {
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId, attrType);
         return Result.ok().put("page", page);
     }
 
