@@ -10,12 +10,15 @@ import com.stonebridge.mallproduct.entity.AttrAttrgroupRelationEntity;
 import com.stonebridge.mallproduct.entity.AttrGroupEntity;
 import com.stonebridge.mallproduct.entity.CategoryEntity;
 import com.stonebridge.mallproduct.service.CategoryService;
+import com.stonebridge.mallproduct.vo.AttrGroupRelationVo;
 import com.stonebridge.mallproduct.vo.AttrRespVo;
 import com.stonebridge.mallproduct.vo.AttrVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -85,7 +88,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
      * @return ：数据集
      */
     @Override
-    public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId,String attrType) {
+    public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String attrType) {
         QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("attr_type", "base".equalsIgnoreCase(attrType) ? ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() : ProductConstant.AttrEnum.ATTR_TYPE_SALE.getCode());
         //1.如果分组id为0,则表示分组id不作为条件查询所有的属性
         if (catelogId != 0) {
@@ -111,7 +114,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             BeanUtils.copyProperties(attrEntity, attrRespVo);
             // 3.3.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联
             // 仅为规格属性为base时查询关联属性组表
-            if ("base".equalsIgnoreCase(attrType)){
+            if ("base".equalsIgnoreCase(attrType)) {
                 AttrAttrgroupRelationEntity attrgroupRelationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
                 if (attrgroupRelationEntity != null) {
                     AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
@@ -164,6 +167,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 修改保存属性数据，以及更新与属性分组表的关系表pms_attr_attrgroup_relation
+     *
      * @param attrVo：
      */
     @Override
@@ -185,5 +189,37 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 relationDao.insert(relationEntity);
             }
         }
+    }
+
+    /**
+     * 根据分组id查找关联的所有基本属性
+     *
+     * @param attrgroupId
+     * @return
+     */
+    @Override
+    public List<AttrEntity> getRelationAttr(Long attrgroupId) {
+        List<AttrAttrgroupRelationEntity> list = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        List<Long> attrIds = list.stream().map((sttr) -> sttr.getAttrId()).collect(Collectors.toList());
+        if (attrIds.size() == 0) {
+            return null;
+        } else {
+            List<AttrEntity> attrEntities = this.listByIds(attrIds);
+            return attrEntities;
+        }
+    }
+
+    /**
+     * 删除《属性分组id》与《属性的id》的关联关系
+     * @param relationVos
+     */
+    @Override
+    public void deleteRelation(AttrGroupRelationVo[] relationVos) {
+        List<AttrAttrgroupRelationEntity> entityList = Arrays.asList(relationVos).stream().map((item) -> {
+            AttrAttrgroupRelationEntity attrgroupRelationEntity = new AttrAttrgroupRelationEntity();
+            BeanUtils.copyProperties(item, attrgroupRelationEntity);
+            return attrgroupRelationEntity;
+        }).collect(Collectors.toList());
+        relationDao.deleteBatchRelation(entityList);
     }
 }

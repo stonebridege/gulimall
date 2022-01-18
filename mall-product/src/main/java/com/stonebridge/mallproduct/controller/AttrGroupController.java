@@ -1,22 +1,20 @@
 package com.stonebridge.mallproduct.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.stonebridge.mallproduct.entity.AttrEntity;
+import com.stonebridge.mallproduct.service.AttrService;
 import com.stonebridge.mallproduct.service.CategoryService;
+import com.stonebridge.mallproduct.vo.AttrGroupRelationVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallproduct.entity.AttrGroupEntity;
 import com.stonebridge.mallproduct.service.AttrGroupService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
-
-
 
 /**
  * 属性分组
@@ -33,6 +31,9 @@ public class AttrGroupController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    AttrService attrService;
 
     /**
      * 列表
@@ -60,8 +61,8 @@ public class AttrGroupController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.save(attrGroup);
+    public Result save(@RequestBody AttrGroupEntity attrGroup) {
+        attrGroupService.save(attrGroup);
 
         return Result.ok();
     }
@@ -70,8 +71,8 @@ public class AttrGroupController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody AttrGroupEntity attrGroup){
-		attrGroupService.updateById(attrGroup);
+    public Result update(@RequestBody AttrGroupEntity attrGroup) {
+        attrGroupService.updateById(attrGroup);
 
         return Result.ok();
     }
@@ -80,9 +81,32 @@ public class AttrGroupController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] attrGroupIds){
-		attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
+    public Result delete(@RequestBody Long[] attrGroupIds) {
+        attrGroupService.removeByIds(Arrays.asList(attrGroupIds));
+        return Result.ok();
+    }
 
+    /**
+     * 根据属性分组id查询对应的所有的属性
+     *
+     * @param attrgroupId 属性分组id
+     * @return 查询数据
+     */
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public Result attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
+        List<AttrEntity> list = attrService.getRelationAttr(attrgroupId);
+        return Result.ok().put("data", list);
+    }
+
+    /**
+     * 删除《属性分组id》与《属性的id》的关联关系
+     *
+     * @param vos ：属性分组id与属性的id
+     * @return 删除结果
+     */
+    @PostMapping("/attr/relation/delete")
+    public Result deleteRelation(@RequestBody AttrGroupRelationVo[] vos) {
+        attrService.deleteRelation(vos);
         return Result.ok();
     }
 
