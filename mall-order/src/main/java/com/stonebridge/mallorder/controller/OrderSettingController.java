@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 订单配置信息
  *
@@ -34,7 +33,7 @@ public class OrderSettingController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderSettingService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class OrderSettingController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		OrderSettingEntity orderSetting = orderSettingService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        OrderSettingEntity orderSetting = orderSettingService.getById(id);
 
         return Result.ok().put("orderSetting", orderSetting);
     }
@@ -55,8 +54,8 @@ public class OrderSettingController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody OrderSettingEntity orderSetting){
-		orderSettingService.save(orderSetting);
+    public Result save(@RequestBody OrderSettingEntity orderSetting) {
+        orderSettingService.save(orderSetting);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class OrderSettingController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody OrderSettingEntity orderSetting){
-		orderSettingService.updateById(orderSetting);
+    public Result update(@RequestBody OrderSettingEntity orderSetting) {
+        orderSettingService.updateById(orderSetting);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class OrderSettingController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		orderSettingService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        orderSettingService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

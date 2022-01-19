@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 退款信息
  *
@@ -34,7 +33,7 @@ public class RefundInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = refundInfoService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class RefundInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		RefundInfoEntity refundInfo = refundInfoService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        RefundInfoEntity refundInfo = refundInfoService.getById(id);
 
         return Result.ok().put("refundInfo", refundInfo);
     }
@@ -55,8 +54,8 @@ public class RefundInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody RefundInfoEntity refundInfo){
-		refundInfoService.save(refundInfo);
+    public Result save(@RequestBody RefundInfoEntity refundInfo) {
+        refundInfoService.save(refundInfo);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class RefundInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody RefundInfoEntity refundInfo){
-		refundInfoService.updateById(refundInfo);
+    public Result update(@RequestBody RefundInfoEntity refundInfo) {
+        refundInfoService.updateById(refundInfo);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class RefundInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		refundInfoService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        refundInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

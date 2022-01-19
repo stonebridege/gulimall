@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 订单项信息
  *
@@ -34,7 +33,7 @@ public class OrderItemController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderItemService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class OrderItemController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		OrderItemEntity orderItem = orderItemService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        OrderItemEntity orderItem = orderItemService.getById(id);
 
         return Result.ok().put("orderItem", orderItem);
     }
@@ -55,8 +54,8 @@ public class OrderItemController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody OrderItemEntity orderItem){
-		orderItemService.save(orderItem);
+    public Result save(@RequestBody OrderItemEntity orderItem) {
+        orderItemService.save(orderItem);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class OrderItemController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody OrderItemEntity orderItem){
-		orderItemService.updateById(orderItem);
+    public Result update(@RequestBody OrderItemEntity orderItem) {
+        orderItemService.updateById(orderItem);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class OrderItemController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		orderItemService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        orderItemService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

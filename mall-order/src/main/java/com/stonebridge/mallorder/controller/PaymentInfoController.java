@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 支付信息表
  *
@@ -34,7 +33,7 @@ public class PaymentInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = paymentInfoService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class PaymentInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		PaymentInfoEntity paymentInfo = paymentInfoService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        PaymentInfoEntity paymentInfo = paymentInfoService.getById(id);
 
         return Result.ok().put("paymentInfo", paymentInfo);
     }
@@ -55,8 +54,8 @@ public class PaymentInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody PaymentInfoEntity paymentInfo){
-		paymentInfoService.save(paymentInfo);
+    public Result save(@RequestBody PaymentInfoEntity paymentInfo) {
+        paymentInfoService.save(paymentInfo);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class PaymentInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody PaymentInfoEntity paymentInfo){
-		paymentInfoService.updateById(paymentInfo);
+    public Result update(@RequestBody PaymentInfoEntity paymentInfo) {
+        paymentInfoService.updateById(paymentInfo);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class PaymentInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		paymentInfoService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        paymentInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

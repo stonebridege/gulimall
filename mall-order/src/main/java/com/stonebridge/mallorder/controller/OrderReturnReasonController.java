@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 退货原因
  *
@@ -34,7 +33,7 @@ public class OrderReturnReasonController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderReturnReasonService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class OrderReturnReasonController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		OrderReturnReasonEntity orderReturnReason = orderReturnReasonService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        OrderReturnReasonEntity orderReturnReason = orderReturnReasonService.getById(id);
 
         return Result.ok().put("orderReturnReason", orderReturnReason);
     }
@@ -55,8 +54,8 @@ public class OrderReturnReasonController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody OrderReturnReasonEntity orderReturnReason){
-		orderReturnReasonService.save(orderReturnReason);
+    public Result save(@RequestBody OrderReturnReasonEntity orderReturnReason) {
+        orderReturnReasonService.save(orderReturnReason);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class OrderReturnReasonController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody OrderReturnReasonEntity orderReturnReason){
-		orderReturnReasonService.updateById(orderReturnReason);
+    public Result update(@RequestBody OrderReturnReasonEntity orderReturnReason) {
+        orderReturnReasonService.updateById(orderReturnReason);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class OrderReturnReasonController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		orderReturnReasonService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        orderReturnReasonService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

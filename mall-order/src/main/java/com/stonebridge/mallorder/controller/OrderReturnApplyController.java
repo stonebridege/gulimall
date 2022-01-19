@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 订单退货申请
  *
@@ -34,7 +33,7 @@ public class OrderReturnApplyController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderReturnApplyService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class OrderReturnApplyController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		OrderReturnApplyEntity orderReturnApply = orderReturnApplyService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        OrderReturnApplyEntity orderReturnApply = orderReturnApplyService.getById(id);
 
         return Result.ok().put("orderReturnApply", orderReturnApply);
     }
@@ -55,8 +54,8 @@ public class OrderReturnApplyController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody OrderReturnApplyEntity orderReturnApply){
-		orderReturnApplyService.save(orderReturnApply);
+    public Result save(@RequestBody OrderReturnApplyEntity orderReturnApply) {
+        orderReturnApplyService.save(orderReturnApply);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class OrderReturnApplyController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody OrderReturnApplyEntity orderReturnApply){
-		orderReturnApplyService.updateById(orderReturnApply);
+    public Result update(@RequestBody OrderReturnApplyEntity orderReturnApply) {
+        orderReturnApplyService.updateById(orderReturnApply);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class OrderReturnApplyController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		orderReturnApplyService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        orderReturnApplyService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
