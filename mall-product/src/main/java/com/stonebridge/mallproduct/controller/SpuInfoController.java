@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * spu信息
  *
@@ -34,7 +33,7 @@ public class SpuInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuInfoService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SpuInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SpuInfoEntity spuInfo = spuInfoService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SpuInfoEntity spuInfo = spuInfoService.getById(id);
 
         return Result.ok().put("spuInfo", spuInfo);
     }
@@ -55,8 +54,8 @@ public class SpuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
+    public Result save(@RequestBody SpuInfoEntity spuInfo) {
+        spuInfoService.save(spuInfo);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SpuInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.updateById(spuInfo);
+    public Result update(@RequestBody SpuInfoEntity spuInfo) {
+        spuInfoService.updateById(spuInfo);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SpuInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		spuInfoService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        spuInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

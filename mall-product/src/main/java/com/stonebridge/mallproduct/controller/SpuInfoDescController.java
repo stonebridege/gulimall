@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * spu信息介绍
  *
@@ -34,7 +33,7 @@ public class SpuInfoDescController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuInfoDescService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SpuInfoDescController {
      * 信息
      */
     @RequestMapping("/info/{spuId}")
-    public Result info(@PathVariable("spuId") Long spuId){
-		SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
+    public Result info(@PathVariable("spuId") Long spuId) {
+        SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
 
         return Result.ok().put("spuInfoDesc", spuInfoDesc);
     }
@@ -55,8 +54,8 @@ public class SpuInfoDescController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SpuInfoDescEntity spuInfoDesc){
-		spuInfoDescService.save(spuInfoDesc);
+    public Result save(@RequestBody SpuInfoDescEntity spuInfoDesc) {
+        spuInfoDescService.save(spuInfoDesc);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SpuInfoDescController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SpuInfoDescEntity spuInfoDesc){
-		spuInfoDescService.updateById(spuInfoDesc);
+    public Result update(@RequestBody SpuInfoDescEntity spuInfoDesc) {
+        spuInfoDescService.updateById(spuInfoDesc);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SpuInfoDescController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] spuIds){
-		spuInfoDescService.removeByIds(Arrays.asList(spuIds));
+    public Result delete(@RequestBody Long[] spuIds) {
+        spuInfoDescService.removeByIds(Arrays.asList(spuIds));
 
         return Result.ok();
     }

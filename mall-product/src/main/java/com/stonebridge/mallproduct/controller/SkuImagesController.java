@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * sku图片
  *
@@ -34,7 +33,7 @@ public class SkuImagesController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = skuImagesService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SkuImagesController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SkuImagesEntity skuImages = skuImagesService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SkuImagesEntity skuImages = skuImagesService.getById(id);
 
         return Result.ok().put("skuImages", skuImages);
     }
@@ -55,8 +54,8 @@ public class SkuImagesController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SkuImagesEntity skuImages){
-		skuImagesService.save(skuImages);
+    public Result save(@RequestBody SkuImagesEntity skuImages) {
+        skuImagesService.save(skuImages);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SkuImagesController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SkuImagesEntity skuImages){
-		skuImagesService.updateById(skuImages);
+    public Result update(@RequestBody SkuImagesEntity skuImages) {
+        skuImagesService.updateById(skuImages);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SkuImagesController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		skuImagesService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        skuImagesService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

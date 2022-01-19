@@ -6,12 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 属性分组
- * 
+ *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
  * @date 2021-12-11 10:16:59
  */
 @Mapper
 public interface AttrGroupDao extends BaseMapper<AttrGroupEntity> {
-	
+
 }

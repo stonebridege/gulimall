@@ -36,6 +36,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 
     /**
      * 当对品牌信息进行修改的时候,如果修改了品牌名称（pms_brand.name）,则要更新pms_category_brand_relation中冗余的pms_brand.name字段
+     *
      * @param brand BrandEntity对象
      */
     @Override

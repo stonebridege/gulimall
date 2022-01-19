@@ -17,7 +17,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品属性
  *
@@ -35,7 +34,7 @@ public class AttrController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = attrService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -46,7 +45,7 @@ public class AttrController {
      *
      * @param params    ：参数
      * @param catelogId ：分类的id（pms_category.id）
-     * @param attrType : 当为sale的时候查询<销售属性>attr_type=0，当为base的时候查询<所有属性>
+     * @param attrType  : 当为sale的时候查询<销售属性>attr_type=0，当为base的时候查询<所有属性>
      * @return :结果集
      */
     @RequestMapping("/{attrType}/list/{catelogId}")
@@ -73,8 +72,8 @@ public class AttrController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody AttrVo attr){
-		attrService.saveAttr(attr);
+    public Result save(@RequestBody AttrVo attr) {
+        attrService.saveAttr(attr);
 
         return Result.ok();
     }
@@ -92,8 +91,8 @@ public class AttrController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] attrIds){
-		attrService.removeByIds(Arrays.asList(attrIds));
+    public Result delete(@RequestBody Long[] attrIds) {
+        attrService.removeByIds(Arrays.asList(attrIds));
 
         return Result.ok();
     }

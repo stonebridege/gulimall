@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * spu属性值
  *
@@ -34,7 +33,7 @@ public class ProductAttrValueController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = productAttrValueService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class ProductAttrValueController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		ProductAttrValueEntity productAttrValue = productAttrValueService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        ProductAttrValueEntity productAttrValue = productAttrValueService.getById(id);
 
         return Result.ok().put("productAttrValue", productAttrValue);
     }
@@ -55,8 +54,8 @@ public class ProductAttrValueController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody ProductAttrValueEntity productAttrValue){
-		productAttrValueService.save(productAttrValue);
+    public Result save(@RequestBody ProductAttrValueEntity productAttrValue) {
+        productAttrValueService.save(productAttrValue);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class ProductAttrValueController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody ProductAttrValueEntity productAttrValue){
-		productAttrValueService.updateById(productAttrValue);
+    public Result update(@RequestBody ProductAttrValueEntity productAttrValue) {
+        productAttrValueService.updateById(productAttrValue);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class ProductAttrValueController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		productAttrValueService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        productAttrValueService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

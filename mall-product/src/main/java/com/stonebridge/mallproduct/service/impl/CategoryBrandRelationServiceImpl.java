@@ -7,7 +7,9 @@ import com.stonebridge.mallproduct.entity.BrandEntity;
 import com.stonebridge.mallproduct.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -60,11 +62,12 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     /**
      * 更新分类
+     *
      * @param catId CategoryEntity对象的id
      * @param name
      */
     @Override
     public void updateCategory(Long catId, String name) {
-        baseMapper.updateCategory(catId,name);
+        baseMapper.updateCategory(catId, name);
     }
 }

@@ -66,6 +66,7 @@ public class BrandController {
 
     /**
      * 当对品牌信息进行修改的时候
+     *
      * @param brand ：BrandEntity对象
      * @return
      */

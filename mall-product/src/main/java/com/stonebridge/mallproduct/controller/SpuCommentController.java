@@ -17,7 +17,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品评价
  *
@@ -35,7 +34,7 @@ public class SpuCommentController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuCommentService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -46,8 +45,8 @@ public class SpuCommentController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SpuCommentEntity spuComment = spuCommentService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SpuCommentEntity spuComment = spuCommentService.getById(id);
 
         return Result.ok().put("spuComment", spuComment);
     }
@@ -56,8 +55,8 @@ public class SpuCommentController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.save(spuComment);
+    public Result save(@RequestBody SpuCommentEntity spuComment) {
+        spuCommentService.save(spuComment);
 
         return Result.ok();
     }
@@ -66,8 +65,8 @@ public class SpuCommentController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.updateById(spuComment);
+    public Result update(@RequestBody SpuCommentEntity spuComment) {
+        spuCommentService.updateById(spuComment);
 
         return Result.ok();
     }
@@ -76,8 +75,8 @@ public class SpuCommentController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		spuCommentService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        spuCommentService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * sku销售属性&值
  *
@@ -34,7 +33,7 @@ public class SkuSaleAttrValueController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = skuSaleAttrValueService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SkuSaleAttrValueController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SkuSaleAttrValueEntity skuSaleAttrValue = skuSaleAttrValueService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SkuSaleAttrValueEntity skuSaleAttrValue = skuSaleAttrValueService.getById(id);
 
         return Result.ok().put("skuSaleAttrValue", skuSaleAttrValue);
     }
@@ -55,8 +54,8 @@ public class SkuSaleAttrValueController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue){
-		skuSaleAttrValueService.save(skuSaleAttrValue);
+    public Result save(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue) {
+        skuSaleAttrValueService.save(skuSaleAttrValue);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SkuSaleAttrValueController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue){
-		skuSaleAttrValueService.updateById(skuSaleAttrValue);
+    public Result update(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue) {
+        skuSaleAttrValueService.updateById(skuSaleAttrValue);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SkuSaleAttrValueController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		skuSaleAttrValueService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        skuSaleAttrValueService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

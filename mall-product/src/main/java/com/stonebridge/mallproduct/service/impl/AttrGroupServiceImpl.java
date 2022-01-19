@@ -31,6 +31,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 查询属性分组表时，增加模糊匹配
+     *
      * @param params
      * @param catelogId
      * @return
