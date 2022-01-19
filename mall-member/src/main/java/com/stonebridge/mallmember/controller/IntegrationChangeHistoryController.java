@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 积分变化历史记录
  *
@@ -34,7 +33,7 @@ public class IntegrationChangeHistoryController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = integrationChangeHistoryService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class IntegrationChangeHistoryController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		IntegrationChangeHistoryEntity integrationChangeHistory = integrationChangeHistoryService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        IntegrationChangeHistoryEntity integrationChangeHistory = integrationChangeHistoryService.getById(id);
 
         return Result.ok().put("integrationChangeHistory", integrationChangeHistory);
     }
@@ -55,8 +54,8 @@ public class IntegrationChangeHistoryController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
-		integrationChangeHistoryService.save(integrationChangeHistory);
+    public Result save(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory) {
+        integrationChangeHistoryService.save(integrationChangeHistory);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class IntegrationChangeHistoryController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){
-		integrationChangeHistoryService.updateById(integrationChangeHistory);
+    public Result update(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory) {
+        integrationChangeHistoryService.updateById(integrationChangeHistory);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class IntegrationChangeHistoryController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		integrationChangeHistoryService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        integrationChangeHistoryService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

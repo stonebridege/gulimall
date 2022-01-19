@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员收藏的专题活动
  *
@@ -34,7 +33,7 @@ public class MemberCollectSubjectController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberCollectSubjectService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberCollectSubjectController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberCollectSubjectEntity memberCollectSubject = memberCollectSubjectService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberCollectSubjectEntity memberCollectSubject = memberCollectSubjectService.getById(id);
 
         return Result.ok().put("memberCollectSubject", memberCollectSubject);
     }
@@ -55,8 +54,8 @@ public class MemberCollectSubjectController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
-		memberCollectSubjectService.save(memberCollectSubject);
+    public Result save(@RequestBody MemberCollectSubjectEntity memberCollectSubject) {
+        memberCollectSubjectService.save(memberCollectSubject);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberCollectSubjectController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberCollectSubjectEntity memberCollectSubject){
-		memberCollectSubjectService.updateById(memberCollectSubject);
+    public Result update(@RequestBody MemberCollectSubjectEntity memberCollectSubject) {
+        memberCollectSubjectService.updateById(memberCollectSubject);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberCollectSubjectController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberCollectSubjectService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberCollectSubjectService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

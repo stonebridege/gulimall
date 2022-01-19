@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员收藏的商品
  *
@@ -34,7 +33,7 @@ public class MemberCollectSpuController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberCollectSpuService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberCollectSpuController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberCollectSpuEntity memberCollectSpu = memberCollectSpuService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberCollectSpuEntity memberCollectSpu = memberCollectSpuService.getById(id);
 
         return Result.ok().put("memberCollectSpu", memberCollectSpu);
     }
@@ -55,8 +54,8 @@ public class MemberCollectSpuController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberCollectSpuEntity memberCollectSpu){
-		memberCollectSpuService.save(memberCollectSpu);
+    public Result save(@RequestBody MemberCollectSpuEntity memberCollectSpu) {
+        memberCollectSpuService.save(memberCollectSpu);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberCollectSpuController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberCollectSpuEntity memberCollectSpu){
-		memberCollectSpuService.updateById(memberCollectSpu);
+    public Result update(@RequestBody MemberCollectSpuEntity memberCollectSpu) {
+        memberCollectSpuService.updateById(memberCollectSpu);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberCollectSpuController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberCollectSpuService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberCollectSpuService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

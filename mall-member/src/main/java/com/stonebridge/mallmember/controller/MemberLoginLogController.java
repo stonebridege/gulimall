@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员登录记录
  *
@@ -34,7 +33,7 @@ public class MemberLoginLogController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberLoginLogService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberLoginLogController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberLoginLogEntity memberLoginLog = memberLoginLogService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberLoginLogEntity memberLoginLog = memberLoginLogService.getById(id);
 
         return Result.ok().put("memberLoginLog", memberLoginLog);
     }
@@ -55,8 +54,8 @@ public class MemberLoginLogController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberLoginLogEntity memberLoginLog){
-		memberLoginLogService.save(memberLoginLog);
+    public Result save(@RequestBody MemberLoginLogEntity memberLoginLog) {
+        memberLoginLogService.save(memberLoginLog);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberLoginLogController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberLoginLogEntity memberLoginLog){
-		memberLoginLogService.updateById(memberLoginLog);
+    public Result update(@RequestBody MemberLoginLogEntity memberLoginLog) {
+        memberLoginLogService.updateById(memberLoginLog);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberLoginLogController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberLoginLogService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberLoginLogService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

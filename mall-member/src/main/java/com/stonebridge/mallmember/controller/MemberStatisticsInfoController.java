@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员统计信息
  *
@@ -34,7 +33,7 @@ public class MemberStatisticsInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberStatisticsInfoService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberStatisticsInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberStatisticsInfoEntity memberStatisticsInfo = memberStatisticsInfoService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberStatisticsInfoEntity memberStatisticsInfo = memberStatisticsInfoService.getById(id);
 
         return Result.ok().put("memberStatisticsInfo", memberStatisticsInfo);
     }
@@ -55,8 +54,8 @@ public class MemberStatisticsInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberStatisticsInfoEntity memberStatisticsInfo){
-		memberStatisticsInfoService.save(memberStatisticsInfo);
+    public Result save(@RequestBody MemberStatisticsInfoEntity memberStatisticsInfo) {
+        memberStatisticsInfoService.save(memberStatisticsInfo);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberStatisticsInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberStatisticsInfoEntity memberStatisticsInfo){
-		memberStatisticsInfoService.updateById(memberStatisticsInfo);
+    public Result update(@RequestBody MemberStatisticsInfoEntity memberStatisticsInfo) {
+        memberStatisticsInfoService.updateById(memberStatisticsInfo);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberStatisticsInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberStatisticsInfoService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberStatisticsInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

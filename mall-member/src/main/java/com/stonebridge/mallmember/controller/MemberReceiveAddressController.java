@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员收货地址
  *
@@ -34,7 +33,7 @@ public class MemberReceiveAddressController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberReceiveAddressService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberReceiveAddressController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberReceiveAddressEntity memberReceiveAddress = memberReceiveAddressService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberReceiveAddressEntity memberReceiveAddress = memberReceiveAddressService.getById(id);
 
         return Result.ok().put("memberReceiveAddress", memberReceiveAddress);
     }
@@ -55,8 +54,8 @@ public class MemberReceiveAddressController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
-		memberReceiveAddressService.save(memberReceiveAddress);
+    public Result save(@RequestBody MemberReceiveAddressEntity memberReceiveAddress) {
+        memberReceiveAddressService.save(memberReceiveAddress);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberReceiveAddressController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberReceiveAddressEntity memberReceiveAddress){
-		memberReceiveAddressService.updateById(memberReceiveAddress);
+    public Result update(@RequestBody MemberReceiveAddressEntity memberReceiveAddress) {
+        memberReceiveAddressService.updateById(memberReceiveAddress);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberReceiveAddressController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberReceiveAddressService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberReceiveAddressService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 成长值变化历史记录
  *
@@ -34,7 +33,7 @@ public class GrowthChangeHistoryController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = growthChangeHistoryService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class GrowthChangeHistoryController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		GrowthChangeHistoryEntity growthChangeHistory = growthChangeHistoryService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        GrowthChangeHistoryEntity growthChangeHistory = growthChangeHistoryService.getById(id);
 
         return Result.ok().put("growthChangeHistory", growthChangeHistory);
     }
@@ -55,8 +54,8 @@ public class GrowthChangeHistoryController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
-		growthChangeHistoryService.save(growthChangeHistory);
+    public Result save(@RequestBody GrowthChangeHistoryEntity growthChangeHistory) {
+        growthChangeHistoryService.save(growthChangeHistory);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class GrowthChangeHistoryController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){
-		growthChangeHistoryService.updateById(growthChangeHistory);
+    public Result update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory) {
+        growthChangeHistoryService.updateById(growthChangeHistory);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class GrowthChangeHistoryController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		growthChangeHistoryService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        growthChangeHistoryService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

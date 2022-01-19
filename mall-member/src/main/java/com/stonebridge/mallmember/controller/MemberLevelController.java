@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 会员等级
  *
@@ -34,7 +33,7 @@ public class MemberLevelController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberLevelService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberLevelController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberLevelEntity memberLevel = memberLevelService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberLevelEntity memberLevel = memberLevelService.getById(id);
 
         return Result.ok().put("memberLevel", memberLevel);
     }
@@ -55,8 +54,8 @@ public class MemberLevelController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberLevelEntity memberLevel){
-		memberLevelService.save(memberLevel);
+    public Result save(@RequestBody MemberLevelEntity memberLevel) {
+        memberLevelService.save(memberLevel);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberLevelController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberLevelEntity memberLevel){
-		memberLevelService.updateById(memberLevel);
+    public Result update(@RequestBody MemberLevelEntity memberLevel) {
+        memberLevelService.updateById(memberLevel);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberLevelController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberLevelService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberLevelService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
