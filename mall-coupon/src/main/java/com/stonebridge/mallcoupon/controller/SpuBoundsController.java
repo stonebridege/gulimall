@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品spu积分设置
  *
@@ -34,7 +33,7 @@ public class SpuBoundsController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuBoundsService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SpuBoundsController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SpuBoundsEntity spuBounds = spuBoundsService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SpuBoundsEntity spuBounds = spuBoundsService.getById(id);
 
         return Result.ok().put("spuBounds", spuBounds);
     }
@@ -55,8 +54,8 @@ public class SpuBoundsController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SpuBoundsEntity spuBounds){
-		spuBoundsService.save(spuBounds);
+    public Result save(@RequestBody SpuBoundsEntity spuBounds) {
+        spuBoundsService.save(spuBounds);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SpuBoundsController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SpuBoundsEntity spuBounds){
-		spuBoundsService.updateById(spuBounds);
+    public Result update(@RequestBody SpuBoundsEntity spuBounds) {
+        spuBoundsService.updateById(spuBounds);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SpuBoundsController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		spuBoundsService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        spuBoundsService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 秒杀活动
  *
@@ -34,7 +33,7 @@ public class SeckillPromotionController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = seckillPromotionService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SeckillPromotionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SeckillPromotionEntity seckillPromotion = seckillPromotionService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SeckillPromotionEntity seckillPromotion = seckillPromotionService.getById(id);
 
         return Result.ok().put("seckillPromotion", seckillPromotion);
     }
@@ -55,8 +54,8 @@ public class SeckillPromotionController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SeckillPromotionEntity seckillPromotion){
-		seckillPromotionService.save(seckillPromotion);
+    public Result save(@RequestBody SeckillPromotionEntity seckillPromotion) {
+        seckillPromotionService.save(seckillPromotion);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SeckillPromotionController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SeckillPromotionEntity seckillPromotion){
-		seckillPromotionService.updateById(seckillPromotion);
+    public Result update(@RequestBody SeckillPromotionEntity seckillPromotion) {
+        seckillPromotionService.updateById(seckillPromotion);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SeckillPromotionController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		seckillPromotionService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        seckillPromotionService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

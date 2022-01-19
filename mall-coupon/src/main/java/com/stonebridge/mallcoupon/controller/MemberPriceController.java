@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品会员价格
  *
@@ -34,7 +33,7 @@ public class MemberPriceController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = memberPriceService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class MemberPriceController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		MemberPriceEntity memberPrice = memberPriceService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        MemberPriceEntity memberPrice = memberPriceService.getById(id);
 
         return Result.ok().put("memberPrice", memberPrice);
     }
@@ -55,8 +54,8 @@ public class MemberPriceController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody MemberPriceEntity memberPrice){
-		memberPriceService.save(memberPrice);
+    public Result save(@RequestBody MemberPriceEntity memberPrice) {
+        memberPriceService.save(memberPrice);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class MemberPriceController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody MemberPriceEntity memberPrice){
-		memberPriceService.updateById(memberPrice);
+    public Result update(@RequestBody MemberPriceEntity memberPrice) {
+        memberPriceService.updateById(memberPrice);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class MemberPriceController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		memberPriceService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        memberPriceService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 秒杀商品通知订阅
  *
@@ -34,7 +33,7 @@ public class SeckillSkuNoticeController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = seckillSkuNoticeService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SeckillSkuNoticeController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SeckillSkuNoticeEntity seckillSkuNotice = seckillSkuNoticeService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SeckillSkuNoticeEntity seckillSkuNotice = seckillSkuNoticeService.getById(id);
 
         return Result.ok().put("seckillSkuNotice", seckillSkuNotice);
     }
@@ -55,8 +54,8 @@ public class SeckillSkuNoticeController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
-		seckillSkuNoticeService.save(seckillSkuNotice);
+    public Result save(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice) {
+        seckillSkuNoticeService.save(seckillSkuNotice);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SeckillSkuNoticeController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice){
-		seckillSkuNoticeService.updateById(seckillSkuNotice);
+    public Result update(@RequestBody SeckillSkuNoticeEntity seckillSkuNotice) {
+        seckillSkuNoticeService.updateById(seckillSkuNotice);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SeckillSkuNoticeController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		seckillSkuNoticeService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        seckillSkuNoticeService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

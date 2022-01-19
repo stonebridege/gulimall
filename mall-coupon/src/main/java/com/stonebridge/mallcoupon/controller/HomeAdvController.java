@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 首页轮播广告
  *
@@ -34,7 +33,7 @@ public class HomeAdvController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = homeAdvService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class HomeAdvController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		HomeAdvEntity homeAdv = homeAdvService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        HomeAdvEntity homeAdv = homeAdvService.getById(id);
 
         return Result.ok().put("homeAdv", homeAdv);
     }
@@ -55,8 +54,8 @@ public class HomeAdvController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody HomeAdvEntity homeAdv){
-		homeAdvService.save(homeAdv);
+    public Result save(@RequestBody HomeAdvEntity homeAdv) {
+        homeAdvService.save(homeAdv);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class HomeAdvController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody HomeAdvEntity homeAdv){
-		homeAdvService.updateById(homeAdv);
+    public Result update(@RequestBody HomeAdvEntity homeAdv) {
+        homeAdvService.updateById(homeAdv);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class HomeAdvController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		homeAdvService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        homeAdvService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

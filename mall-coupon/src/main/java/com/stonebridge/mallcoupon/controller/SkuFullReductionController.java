@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品满减信息
  *
@@ -34,7 +33,7 @@ public class SkuFullReductionController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = skuFullReductionService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SkuFullReductionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SkuFullReductionEntity skuFullReduction = skuFullReductionService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SkuFullReductionEntity skuFullReduction = skuFullReductionService.getById(id);
 
         return Result.ok().put("skuFullReduction", skuFullReduction);
     }
@@ -55,8 +54,8 @@ public class SkuFullReductionController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SkuFullReductionEntity skuFullReduction){
-		skuFullReductionService.save(skuFullReduction);
+    public Result save(@RequestBody SkuFullReductionEntity skuFullReduction) {
+        skuFullReductionService.save(skuFullReduction);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SkuFullReductionController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SkuFullReductionEntity skuFullReduction){
-		skuFullReductionService.updateById(skuFullReduction);
+    public Result update(@RequestBody SkuFullReductionEntity skuFullReduction) {
+        skuFullReductionService.updateById(skuFullReduction);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SkuFullReductionController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		skuFullReductionService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        skuFullReductionService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

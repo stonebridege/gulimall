@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 专题商品
  *
@@ -34,7 +33,7 @@ public class HomeSubjectSpuController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = homeSubjectSpuService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class HomeSubjectSpuController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		HomeSubjectSpuEntity homeSubjectSpu = homeSubjectSpuService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        HomeSubjectSpuEntity homeSubjectSpu = homeSubjectSpuService.getById(id);
 
         return Result.ok().put("homeSubjectSpu", homeSubjectSpu);
     }
@@ -55,8 +54,8 @@ public class HomeSubjectSpuController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
-		homeSubjectSpuService.save(homeSubjectSpu);
+    public Result save(@RequestBody HomeSubjectSpuEntity homeSubjectSpu) {
+        homeSubjectSpuService.save(homeSubjectSpu);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class HomeSubjectSpuController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody HomeSubjectSpuEntity homeSubjectSpu){
-		homeSubjectSpuService.updateById(homeSubjectSpu);
+    public Result update(@RequestBody HomeSubjectSpuEntity homeSubjectSpu) {
+        homeSubjectSpuService.updateById(homeSubjectSpu);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class HomeSubjectSpuController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		homeSubjectSpuService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        homeSubjectSpuService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

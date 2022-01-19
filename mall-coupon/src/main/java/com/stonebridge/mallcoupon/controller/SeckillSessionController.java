@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 秒杀活动场次
  *
@@ -34,7 +33,7 @@ public class SeckillSessionController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = seckillSessionService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SeckillSessionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SeckillSessionEntity seckillSession = seckillSessionService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SeckillSessionEntity seckillSession = seckillSessionService.getById(id);
 
         return Result.ok().put("seckillSession", seckillSession);
     }
@@ -55,8 +54,8 @@ public class SeckillSessionController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SeckillSessionEntity seckillSession){
-		seckillSessionService.save(seckillSession);
+    public Result save(@RequestBody SeckillSessionEntity seckillSession) {
+        seckillSessionService.save(seckillSession);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SeckillSessionController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SeckillSessionEntity seckillSession){
-		seckillSessionService.updateById(seckillSession);
+    public Result update(@RequestBody SeckillSessionEntity seckillSession) {
+        seckillSessionService.updateById(seckillSession);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SeckillSessionController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		seckillSessionService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        seckillSessionService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

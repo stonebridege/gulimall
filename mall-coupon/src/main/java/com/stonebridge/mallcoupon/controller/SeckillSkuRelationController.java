@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 秒杀活动商品关联
  *
@@ -34,7 +33,7 @@ public class SeckillSkuRelationController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = seckillSkuRelationService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class SeckillSkuRelationController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		SeckillSkuRelationEntity seckillSkuRelation = seckillSkuRelationService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        SeckillSkuRelationEntity seckillSkuRelation = seckillSkuRelationService.getById(id);
 
         return Result.ok().put("seckillSkuRelation", seckillSkuRelation);
     }
@@ -55,8 +54,8 @@ public class SeckillSkuRelationController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
-		seckillSkuRelationService.save(seckillSkuRelation);
+    public Result save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation) {
+        seckillSkuRelationService.save(seckillSkuRelation);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class SeckillSkuRelationController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
-		seckillSkuRelationService.updateById(seckillSkuRelation);
+    public Result update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation) {
+        seckillSkuRelationService.updateById(seckillSkuRelation);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class SeckillSkuRelationController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		seckillSkuRelationService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        seckillSkuRelationService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

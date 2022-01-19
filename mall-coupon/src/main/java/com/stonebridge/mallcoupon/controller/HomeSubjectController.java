@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】
  *
@@ -34,7 +33,7 @@ public class HomeSubjectController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = homeSubjectService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class HomeSubjectController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		HomeSubjectEntity homeSubject = homeSubjectService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        HomeSubjectEntity homeSubject = homeSubjectService.getById(id);
 
         return Result.ok().put("homeSubject", homeSubject);
     }
@@ -55,8 +54,8 @@ public class HomeSubjectController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody HomeSubjectEntity homeSubject){
-		homeSubjectService.save(homeSubject);
+    public Result save(@RequestBody HomeSubjectEntity homeSubject) {
+        homeSubjectService.save(homeSubject);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class HomeSubjectController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody HomeSubjectEntity homeSubject){
-		homeSubjectService.updateById(homeSubject);
+    public Result update(@RequestBody HomeSubjectEntity homeSubject) {
+        homeSubjectService.updateById(homeSubject);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class HomeSubjectController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		homeSubjectService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        homeSubjectService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

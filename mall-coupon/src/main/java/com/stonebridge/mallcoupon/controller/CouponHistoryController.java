@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 优惠券领取历史记录
  *
@@ -34,7 +33,7 @@ public class CouponHistoryController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = couponHistoryService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class CouponHistoryController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		CouponHistoryEntity couponHistory = couponHistoryService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        CouponHistoryEntity couponHistory = couponHistoryService.getById(id);
 
         return Result.ok().put("couponHistory", couponHistory);
     }
@@ -55,8 +54,8 @@ public class CouponHistoryController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody CouponHistoryEntity couponHistory){
-		couponHistoryService.save(couponHistory);
+    public Result save(@RequestBody CouponHistoryEntity couponHistory) {
+        couponHistoryService.save(couponHistory);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class CouponHistoryController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody CouponHistoryEntity couponHistory){
-		couponHistoryService.updateById(couponHistory);
+    public Result update(@RequestBody CouponHistoryEntity couponHistory) {
+        couponHistoryService.updateById(couponHistory);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class CouponHistoryController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		couponHistoryService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        couponHistoryService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

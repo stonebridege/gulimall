@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 优惠券分类关联
  *
@@ -34,7 +33,7 @@ public class CouponSpuCategoryRelationController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = couponSpuCategoryRelationService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class CouponSpuCategoryRelationController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		CouponSpuCategoryRelationEntity couponSpuCategoryRelation = couponSpuCategoryRelationService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        CouponSpuCategoryRelationEntity couponSpuCategoryRelation = couponSpuCategoryRelationService.getById(id);
 
         return Result.ok().put("couponSpuCategoryRelation", couponSpuCategoryRelation);
     }
@@ -55,8 +54,8 @@ public class CouponSpuCategoryRelationController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody CouponSpuCategoryRelationEntity couponSpuCategoryRelation){
-		couponSpuCategoryRelationService.save(couponSpuCategoryRelation);
+    public Result save(@RequestBody CouponSpuCategoryRelationEntity couponSpuCategoryRelation) {
+        couponSpuCategoryRelationService.save(couponSpuCategoryRelation);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class CouponSpuCategoryRelationController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody CouponSpuCategoryRelationEntity couponSpuCategoryRelation){
-		couponSpuCategoryRelationService.updateById(couponSpuCategoryRelation);
+    public Result update(@RequestBody CouponSpuCategoryRelationEntity couponSpuCategoryRelation) {
+        couponSpuCategoryRelationService.updateById(couponSpuCategoryRelation);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class CouponSpuCategoryRelationController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		couponSpuCategoryRelationService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        couponSpuCategoryRelationService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

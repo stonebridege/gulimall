@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 优惠券与产品关联
  *
@@ -34,7 +33,7 @@ public class CouponSpuRelationController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = couponSpuRelationService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class CouponSpuRelationController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		CouponSpuRelationEntity couponSpuRelation = couponSpuRelationService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        CouponSpuRelationEntity couponSpuRelation = couponSpuRelationService.getById(id);
 
         return Result.ok().put("couponSpuRelation", couponSpuRelation);
     }
@@ -55,8 +54,8 @@ public class CouponSpuRelationController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody CouponSpuRelationEntity couponSpuRelation){
-		couponSpuRelationService.save(couponSpuRelation);
+    public Result save(@RequestBody CouponSpuRelationEntity couponSpuRelation) {
+        couponSpuRelationService.save(couponSpuRelation);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class CouponSpuRelationController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody CouponSpuRelationEntity couponSpuRelation){
-		couponSpuRelationService.updateById(couponSpuRelation);
+    public Result update(@RequestBody CouponSpuRelationEntity couponSpuRelation) {
+        couponSpuRelationService.updateById(couponSpuRelation);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class CouponSpuRelationController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		couponSpuRelationService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        couponSpuRelationService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
