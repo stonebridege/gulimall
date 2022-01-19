@@ -16,10 +16,7 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
- * 
- *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
  * @date 2021-12-12 11:36:21
@@ -34,7 +31,7 @@ public class PurchaseDetailController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = purchaseDetailService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +42,8 @@ public class PurchaseDetailController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		PurchaseDetailEntity purchaseDetail = purchaseDetailService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        PurchaseDetailEntity purchaseDetail = purchaseDetailService.getById(id);
 
         return Result.ok().put("purchaseDetail", purchaseDetail);
     }
@@ -55,8 +52,8 @@ public class PurchaseDetailController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody PurchaseDetailEntity purchaseDetail){
-		purchaseDetailService.save(purchaseDetail);
+    public Result save(@RequestBody PurchaseDetailEntity purchaseDetail) {
+        purchaseDetailService.save(purchaseDetail);
 
         return Result.ok();
     }
@@ -65,8 +62,8 @@ public class PurchaseDetailController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody PurchaseDetailEntity purchaseDetail){
-		purchaseDetailService.updateById(purchaseDetail);
+    public Result update(@RequestBody PurchaseDetailEntity purchaseDetail) {
+        purchaseDetailService.updateById(purchaseDetail);
 
         return Result.ok();
     }
@@ -75,8 +72,8 @@ public class PurchaseDetailController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		purchaseDetailService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        purchaseDetailService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

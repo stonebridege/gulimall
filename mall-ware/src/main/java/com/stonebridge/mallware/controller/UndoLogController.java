@@ -16,10 +16,7 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
- * 
- *
  * @author stonebridge
  * @email stonebridge@njfu.edu.com
  * @date 2021-12-12 11:36:21
@@ -34,7 +31,7 @@ public class UndoLogController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = undoLogService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +42,8 @@ public class UndoLogController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		UndoLogEntity undoLog = undoLogService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        UndoLogEntity undoLog = undoLogService.getById(id);
 
         return Result.ok().put("undoLog", undoLog);
     }
@@ -55,8 +52,8 @@ public class UndoLogController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody UndoLogEntity undoLog){
-		undoLogService.save(undoLog);
+    public Result save(@RequestBody UndoLogEntity undoLog) {
+        undoLogService.save(undoLog);
 
         return Result.ok();
     }
@@ -65,8 +62,8 @@ public class UndoLogController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody UndoLogEntity undoLog){
-		undoLogService.updateById(undoLog);
+    public Result update(@RequestBody UndoLogEntity undoLog) {
+        undoLogService.updateById(undoLog);
 
         return Result.ok();
     }
@@ -75,8 +72,8 @@ public class UndoLogController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		undoLogService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        undoLogService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 商品库存
  *
@@ -34,7 +33,7 @@ public class WareSkuController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareSkuService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class WareSkuController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		WareSkuEntity wareSku = wareSkuService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        WareSkuEntity wareSku = wareSkuService.getById(id);
 
         return Result.ok().put("wareSku", wareSku);
     }
@@ -55,8 +54,8 @@ public class WareSkuController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.save(wareSku);
+    public Result save(@RequestBody WareSkuEntity wareSku) {
+        wareSkuService.save(wareSku);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class WareSkuController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.updateById(wareSku);
+    public Result update(@RequestBody WareSkuEntity wareSku) {
+        wareSkuService.updateById(wareSku);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class WareSkuController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		wareSkuService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        wareSkuService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

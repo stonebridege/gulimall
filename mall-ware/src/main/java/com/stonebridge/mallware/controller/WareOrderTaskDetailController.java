@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 库存工作单
  *
@@ -34,7 +33,7 @@ public class WareOrderTaskDetailController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareOrderTaskDetailService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class WareOrderTaskDetailController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		WareOrderTaskDetailEntity wareOrderTaskDetail = wareOrderTaskDetailService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        WareOrderTaskDetailEntity wareOrderTaskDetail = wareOrderTaskDetailService.getById(id);
 
         return Result.ok().put("wareOrderTaskDetail", wareOrderTaskDetail);
     }
@@ -55,8 +54,8 @@ public class WareOrderTaskDetailController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail){
-		wareOrderTaskDetailService.save(wareOrderTaskDetail);
+    public Result save(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail) {
+        wareOrderTaskDetailService.save(wareOrderTaskDetail);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class WareOrderTaskDetailController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail){
-		wareOrderTaskDetailService.updateById(wareOrderTaskDetail);
+    public Result update(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail) {
+        wareOrderTaskDetailService.updateById(wareOrderTaskDetail);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class WareOrderTaskDetailController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		wareOrderTaskDetailService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        wareOrderTaskDetailService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

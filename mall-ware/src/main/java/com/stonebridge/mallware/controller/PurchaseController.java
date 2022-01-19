@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 采购信息
  *
@@ -34,7 +33,7 @@ public class PurchaseController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = purchaseService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class PurchaseController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		PurchaseEntity purchase = purchaseService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        PurchaseEntity purchase = purchaseService.getById(id);
 
         return Result.ok().put("purchase", purchase);
     }
@@ -55,8 +54,8 @@ public class PurchaseController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody PurchaseEntity purchase){
-		purchaseService.save(purchase);
+    public Result save(@RequestBody PurchaseEntity purchase) {
+        purchaseService.save(purchase);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class PurchaseController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody PurchaseEntity purchase){
-		purchaseService.updateById(purchase);
+    public Result update(@RequestBody PurchaseEntity purchase) {
+        purchaseService.updateById(purchase);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class PurchaseController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		purchaseService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        purchaseService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

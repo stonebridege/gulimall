@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 
- * 
  * @author leifengyang
  * @email leifengyang@gmail.com
  * @date 2019-11-17 13:50:10
@@ -17,36 +15,36 @@ import java.math.BigDecimal;
 @Data
 @TableName("wms_purchase_detail")
 public class PurchaseDetailEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	@TableId
-	private Long id;
-	/**
-	 * 采购单id
-	 */
-	private Long purchaseId;
-	/**
-	 * 采购商品id
-	 */
-	private Long skuId;
-	/**
-	 * 采购数量
-	 */
-	private Integer skuNum;
-	/**
-	 * 采购金额
-	 */
-	private BigDecimal skuPrice;
-	/**
-	 * 仓库id
-	 */
-	private Long wareId;
-	/**
-	 * 状态[0新建，1已分配，2正在采购，3已完成，4采购失败]
-	 */
-	private Integer status;
+    /**
+     *
+     */
+    @TableId
+    private Long id;
+    /**
+     * 采购单id
+     */
+    private Long purchaseId;
+    /**
+     * 采购商品id
+     */
+    private Long skuId;
+    /**
+     * 采购数量
+     */
+    private Integer skuNum;
+    /**
+     * 采购金额
+     */
+    private BigDecimal skuPrice;
+    /**
+     * 仓库id
+     */
+    private Long wareId;
+    /**
+     * 状态[0新建，1已分配，2正在采购，3已完成，4采购失败]
+     */
+    private Integer status;
 
 }

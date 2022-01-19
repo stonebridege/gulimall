@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 仓库信息
  *
@@ -34,7 +33,7 @@ public class WareInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareInfoService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class WareInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		WareInfoEntity wareInfo = wareInfoService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        WareInfoEntity wareInfo = wareInfoService.getById(id);
 
         return Result.ok().put("wareInfo", wareInfo);
     }
@@ -55,8 +54,8 @@ public class WareInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody WareInfoEntity wareInfo){
-		wareInfoService.save(wareInfo);
+    public Result save(@RequestBody WareInfoEntity wareInfo) {
+        wareInfoService.save(wareInfo);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class WareInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody WareInfoEntity wareInfo){
-		wareInfoService.updateById(wareInfo);
+    public Result update(@RequestBody WareInfoEntity wareInfo) {
+        wareInfoService.updateById(wareInfo);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class WareInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		wareInfoService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        wareInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

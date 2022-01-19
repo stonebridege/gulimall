@@ -16,7 +16,6 @@ import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
 
-
 /**
  * 库存工作单
  *
@@ -34,7 +33,7 @@ public class WareOrderTaskController {
      * 列表
      */
     @RequestMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareOrderTaskService.queryPage(params);
 
         return Result.ok().put("page", page);
@@ -45,8 +44,8 @@ public class WareOrderTaskController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long id){
-		WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
 
         return Result.ok().put("wareOrderTask", wareOrderTask);
     }
@@ -55,8 +54,8 @@ public class WareOrderTaskController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody WareOrderTaskEntity wareOrderTask){
-		wareOrderTaskService.save(wareOrderTask);
+    public Result save(@RequestBody WareOrderTaskEntity wareOrderTask) {
+        wareOrderTaskService.save(wareOrderTask);
 
         return Result.ok();
     }
@@ -65,8 +64,8 @@ public class WareOrderTaskController {
      * 修改
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody WareOrderTaskEntity wareOrderTask){
-		wareOrderTaskService.updateById(wareOrderTask);
+    public Result update(@RequestBody WareOrderTaskEntity wareOrderTask) {
+        wareOrderTaskService.updateById(wareOrderTask);
 
         return Result.ok();
     }
@@ -75,8 +74,8 @@ public class WareOrderTaskController {
      * 删除
      */
     @RequestMapping("/delete")
-    public Result delete(@RequestBody Long[] ids){
-		wareOrderTaskService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        wareOrderTaskService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
