@@ -110,4 +110,17 @@ public class AttrGroupController {
         return Result.ok();
     }
 
+    /**
+     * @param attrgroupId 属性分组的id
+     * @param params      所在分类信息
+     * @return
+     */
+    //mallproduct/attrgroup/2/noattr/relation
+    //获取本分类下没有其他分组关联的属性
+    @GetMapping("/{attrgroupId}/noattr/relation")
+    public Result attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId,
+                                 @RequestParam Map<String, Object> params) {
+        PageUtils page = attrService.getNoRelationAttr(attrgroupId, params);
+        return Result.ok().put("page", page);
+    }
 }
