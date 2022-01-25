@@ -71,7 +71,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         BeanUtils.copyProperties(attr, attrEntity);
         this.save(attrEntity);
         //2.保存关联关系,AttrType为1，即为基本属性。当不为1时，即为0。销售属性时不保存关联关系
-        if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
+        if (attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() && (attr.getAttrGroupId() != null)) {
             AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
             relationEntity.setAttrGroupId(attr.getAttrGroupId());
             relationEntity.setAttrId(attrEntity.getAttrId());
@@ -115,7 +115,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             // 仅为规格属性为base时查询关联属性组表
             if ("base".equalsIgnoreCase(attrType)) {
                 AttrAttrgroupRelationEntity attrgroupRelationEntity = attrAttrgroupRelationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
-                if (attrgroupRelationEntity != null) {
+                if (attrgroupRelationEntity != null && attrgroupRelationEntity.getAttrGroupId() != null) {
                     AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
                     attrRespVo.setGroupName(attrGroup.getAttrGroupName());
                 }
@@ -222,6 +222,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 删除《属性分组id》与《属性的id》的关联关系，即<删除属性&属性分组关联>的数据
+     *
      * @param relationVos 删除的关联关系数据
      */
     @Override
@@ -264,7 +265,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         List<Long> attrIds = attrgroupRelationEntityList.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
         //2.5.获取<当前分类catelog_id> && <移除已经绑定了关联属性分组的属性> 所有属性
         QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelogId).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
-        if (attrIds.isEmpty()) {
+        if (attrIds.size() > 0) {
             queryWrapper.notIn("attr_id", attrIds);
         }
 

@@ -3,11 +3,15 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.stonebridge.mallproduct.entity.AttrAttrgroupRelationEntity;
 import com.stonebridge.mallproduct.entity.AttrEntity;
+import com.stonebridge.mallproduct.service.AttrAttrgroupRelationService;
 import com.stonebridge.mallproduct.service.AttrService;
 import com.stonebridge.mallproduct.service.CategoryService;
 import com.stonebridge.mallproduct.vo.AttrGroupRelationVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +38,9 @@ public class AttrGroupController {
 
     @Autowired
     AttrService attrService;
+
+    @Autowired
+    AttrAttrgroupRelationService relationService;
 
     /**
      * 列表
@@ -118,9 +125,25 @@ public class AttrGroupController {
     //mallproduct/attrgroup/2/noattr/relation
     //获取本分类下没有其他分组关联的属性
     @GetMapping("/{attrgroupId}/noattr/relation")
-    public Result attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId,
-                                 @RequestParam Map<String, Object> params) {
+    public Result attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId, @RequestParam Map<String, Object> params) {
         PageUtils page = attrService.getNoRelationAttr(attrgroupId, params);
         return Result.ok().put("page", page);
+    }
+
+    /**
+     * 属性和属性分组保存关联关系
+     *
+     * @param list
+     * @return
+     */
+    @PostMapping("/attr/relation")
+    public Result addRelation(@RequestBody List<AttrGroupRelationVo> list) {
+        List<AttrAttrgroupRelationEntity> attrgroupRelationEntityList = list.stream().map((item) -> {
+            AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
+            BeanUtils.copyProperties(item, relationEntity);
+            return relationEntity;
+        }).collect(Collectors.toList());
+        relationService.saveBatch(attrgroupRelationEntityList);
+        return Result.ok();
     }
 }
