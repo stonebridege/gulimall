@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements AttrService {
 
     @Autowired
-    AttrAttrgroupRelationDao relationDao;
+    AttrAttrgroupRelationDao attrAttrgroupRelationDao;
 
     @Autowired
     AttrGroupDao attrGroupDao;
@@ -76,7 +75,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
             relationEntity.setAttrGroupId(attr.getAttrGroupId());
             relationEntity.setAttrId(attrEntity.getAttrId());
-            relationDao.insert(relationEntity);
+            attrAttrgroupRelationDao.insert(relationEntity);
         }
     }
 
@@ -115,7 +114,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             // 3.3.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联
             // 仅为规格属性为base时查询关联属性组表
             if ("base".equalsIgnoreCase(attrType)) {
-                AttrAttrgroupRelationEntity attrgroupRelationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+                AttrAttrgroupRelationEntity attrgroupRelationEntity = attrAttrgroupRelationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
                 if (attrgroupRelationEntity != null) {
                     AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
                     attrRespVo.setGroupName(attrGroup.getAttrGroupName());
@@ -140,24 +139,27 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
      */
     @Override
     public AttrRespVo getAttrInfo(Long attrId) {
-        //1.查询当前属性的详细信息
         AttrRespVo attrRespVo = new AttrRespVo();
+        //1.根据属性Id查询当前属性的详细信息，并将其赋值到AttrRespVo对象
         AttrEntity attrEntity = this.getById(attrId);
         BeanUtils.copyProperties(attrEntity, attrRespVo);
-        // 仅为规格属性为base时查询关联属性组表
+        //2.规格属性为base时（即该属性为基础属性的值）查询关联属性组表
         if (attrEntity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
-            //2.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联。再查询pms_category.groupName数据
-            AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+            //3.根据属性Id查询出<属性&属性分组关联表>的数据；
+            AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
             if (relationEntity != null) {
+                //4.再根据属性&属性分组关联表查询属性分组的id，再查询出属性分组表，获取分组名称
                 attrRespVo.setAttrGroupId(relationEntity.getAttrGroupId());
                 AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(relationEntity.getAttrGroupId()));
                 attrRespVo.setGroupName(attrGroup.getAttrGroupName());
             }
         }
-        //3.关联pms_category的分类名称，根据pms_attr.catelog_id关联查询即可
+        //5.根据pms_attr.catelog_id获取分类的主键id。根据主键查询出所有的分类信息
         Long catelogId = attrEntity.getCatelogId();
+        //6.获取分类信息的父级节点关系
         Long[] catelogPath = categoryService.findCatelogPath(catelogId);
         attrRespVo.setCatelogPath(catelogPath);
+        //7.获取分类信息并返回分类名称
         CategoryEntity categoryEntity = categoryService.getById(catelogId);
         if (categoryEntity != null) {
             attrRespVo.setCatelogName(categoryEntity.getName());
@@ -166,7 +168,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     /**
-     * 修改保存属性数据，以及更新与属性分组表的关系表pms_attr_attrgroup_relation
+     * 修改<属性数据>，以及更新<属性&属性分组关联表>pms_attr_attrgroup_relation
      *
      * @param attrVo：
      */
@@ -176,83 +178,98 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         AttrEntity attrEntity = new AttrEntity();
         BeanUtils.copyProperties(attrVo, attrEntity);
         this.updateById(attrEntity);
-        // 更新关联关系,AttrType为1，即为基本属性。当不为1时，即为0。销售属性时不保存关联关系
+        // 2.更新关联关系,AttrType为1，即为基本属性。当不为1时，即为0。销售属性时不保存关联关系
         if (attrEntity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
-            //2.更新保存关系表pms_attr_attrgroup_relation数据
+            //3.更新保存关系表pms_attr_attrgroup_relation数据
             AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
             relationEntity.setAttrGroupId(attrVo.getAttrGroupId());
             relationEntity.setAttrId(attrVo.getAttrId());
-            Integer count = relationDao.selectCount(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
+            //4.查询该属性是否已经与属性分组关联，如果已关联则更新数据，否则新增数据
+            Integer count = attrAttrgroupRelationDao.selectCount(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
             if (count > 0) {
-                relationDao.update(relationEntity, new UpdateWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
+                attrAttrgroupRelationDao.update(relationEntity, new UpdateWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrVo.getAttrId()));
             } else {
-                relationDao.insert(relationEntity);
+                attrAttrgroupRelationDao.insert(relationEntity);
             }
         }
     }
 
     /**
-     * 根据分组id查找关联的所有基本属性
+     * 根据<属性分组id>查找其关联的所有基本属性
      *
-     * @param attrgroupId
-     * @return
+     * @param attrgroupId 属性分组id
+     * @return ：数据
      */
     @Override
     public List<AttrEntity> getRelationAttr(Long attrgroupId) {
-        List<AttrAttrgroupRelationEntity> list = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        /**
+         * 1.根据<属性分组id>查找<属性&属性分组关联表>对应数据
+         */
+        List<AttrAttrgroupRelationEntity> list = attrAttrgroupRelationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        /**
+         * 2.遍历<属性&属性分组关联表>的数据获取所有是属性主键
+         */
         List<Long> attrIds = list.stream().map((sttr) -> sttr.getAttrId()).collect(Collectors.toList());
-        if (attrIds.size() == 0) {
+        if (attrIds.isEmpty()) {
             return null;
         } else {
-            List<AttrEntity> attrEntities = this.listByIds(attrIds);
-            return attrEntities;
+            /**
+             * 3.根据属性主键查询所有数据
+             */
+            return this.listByIds(attrIds);
         }
     }
 
     /**
-     * 删除《属性分组id》与《属性的id》的关联关系
-     *
-     * @param relationVos
+     * 删除《属性分组id》与《属性的id》的关联关系，即<删除属性&属性分组关联>的数据
+     * @param relationVos 删除的关联关系数据
      */
     @Override
     public void deleteRelation(AttrGroupRelationVo[] relationVos) {
+        /**
+         * 将<属性分组id>和<属性的id>封装成AttrAttrgroupRelationEntity对象再执行删除操作
+         */
         List<AttrAttrgroupRelationEntity> entityList = Arrays.asList(relationVos).stream().map((item) -> {
             AttrAttrgroupRelationEntity attrgroupRelationEntity = new AttrAttrgroupRelationEntity();
             BeanUtils.copyProperties(item, attrgroupRelationEntity);
             return attrgroupRelationEntity;
         }).collect(Collectors.toList());
-        relationDao.deleteBatchRelation(entityList);
+        attrAttrgroupRelationDao.deleteBatchRelation(entityList);
     }
 
     /**
-     *
+     * 获取本分类下没有其他属性分组关联的属性
      *
      * @param attrgroupId ：当前分组的id
-     * @param params
-     * @return
+     * @param params      分页参数、模糊匹配参数
+     * @return ：数据集
      */
     @Override
     public PageUtils getNoRelationAttr(Long attrgroupId, Map<String, Object> params) {
-        //1.1.当前的分组只能只能关联自己所属的分类的里面的所有属性
+        //1.获取当前<属性分组>中对应的pms_category的主键
+        //1.1.根据<属性&属性分组关联表的主键id>查询pms_attr_group对应的数据
         AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
-        //1.2.获取分组的id
+        //1.2.获取<属性&属性分组关联表>中的分类主键id（pms_category的主键）
         Long catelogId = attrGroupEntity.getCatelogId();
-        //2.1.当前分组只能关联别的分组没有引入的属性
-        List<AttrGroupEntity> groupEntityList = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
-        List<Long> collect = groupEntityList.stream().map(item -> {
-            return item.getAttrGroupId();
-        }).collect(Collectors.toList());
 
-        //2.2.当前分类下的其他分组
-        List<AttrAttrgroupRelationEntity> attrgroupRelationEntityList = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", collect));
-        List<Long> attrIds = attrgroupRelationEntityList.stream().map(item -> {
-            return item.getAttrId();
-        }).collect(Collectors.toList());
-        //2.3.从当前分类的所有属性移除属性
+
+        //2.获取当前<属性分组>只能关联别的<属性分组>没有引用的属性
+        //2.1.获取当前分类下的所有的<属性&属性分组关联表>数据
+        List<AttrGroupEntity> groupEntityList = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
+        //2.2.获取当前分类下的所有<属性&属性分组关联表>数据的属性分组id（主键），即已经关联当前分类所有属性分组
+        List<Long> attrGroupIdList = groupEntityList.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
+        //2.3.根据<当前分类所有属性分组的id>的数据从<属性&属性分组关联表>查询所有<属性&属性分组关联表>的关联数据
+        List<AttrAttrgroupRelationEntity> attrgroupRelationEntityList = attrAttrgroupRelationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", attrGroupIdList));
+        //2.4.根据<属性&属性分组关联表>的数据获取当前分类下所有的属性id（主键）
+        List<Long> attrIds = attrgroupRelationEntityList.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+        //2.5.获取<当前分类catelog_id> && <移除已经绑定了关联属性分组的属性> 所有属性
         QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelogId).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
-        if (attrIds.size() == 0) {
+        if (attrIds.isEmpty()) {
             queryWrapper.notIn("attr_id", attrIds);
         }
+
+
+        //3.查询对应的数据
         String key = StrUtil.trim(params.get("key"));
         if (!StrUtil.isEmpty(key)) {
             queryWrapper.and((w) -> {
