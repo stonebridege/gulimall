@@ -202,10 +202,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
      */
     @Override
     public List<AttrEntity> getRelationAttr(Long attrgroupId) {
-        /**
+        /*
          * 1.根据<属性分组id>查找<属性&属性分组关联表>对应数据
          */
-        List<AttrAttrgroupRelationEntity> list = attrAttrgroupRelationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        QueryWrapper<AttrAttrgroupRelationEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attr_group_id", attrgroupId);
+        List<AttrAttrgroupRelationEntity> list = attrAttrgroupRelationDao.selectList(queryWrapper);
         /**
          * 2.遍历<属性&属性分组关联表>的数据获取所有是属性主键
          */
@@ -253,7 +255,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         //1.2.获取<属性&属性分组关联表>中的分类主键id（pms_category的主键）
         Long catelogId = attrGroupEntity.getCatelogId();
 
-
         //2.获取当前<属性分组>只能关联别的<属性分组>没有引用的属性
         //2.1.获取当前分类下的所有的<属性&属性分组关联表>数据
         List<AttrGroupEntity> groupEntityList = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
@@ -268,7 +269,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         if (attrIds.size() > 0) {
             queryWrapper.notIn("attr_id", attrIds);
         }
-
 
         //3.查询对应的数据
         String key = StrUtil.trim(params.get("key"));
