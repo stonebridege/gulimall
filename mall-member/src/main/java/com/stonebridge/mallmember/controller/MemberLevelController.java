@@ -30,6 +30,7 @@ public class MemberLevelController {
     private MemberLevelService memberLevelService;
 
     /**
+     * /api/mallmember/memberlevel/list
      * 列表
      */
     @RequestMapping("/list")

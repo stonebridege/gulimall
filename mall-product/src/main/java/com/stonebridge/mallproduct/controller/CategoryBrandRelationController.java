@@ -3,9 +3,13 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.stonebridge.mallproduct.entity.BrandEntity;
+import com.stonebridge.mallproduct.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallproduct.entity.CategoryBrandRelationEntity;
@@ -24,8 +28,13 @@ import com.common.utils.Result;
 @RestController
 @RequestMapping("mallproduct/categorybrandrelation")
 public class CategoryBrandRelationController {
-    @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
+
+    @Autowired
+    @Qualifier(value = "categoryBrandRelationService")
+    public void setCategoryBrandRelationService(CategoryBrandRelationService categoryBrandRelationService) {
+        this.categoryBrandRelationService = categoryBrandRelationService;
+    }
 
     /**
      * 列表
@@ -86,6 +95,27 @@ public class CategoryBrandRelationController {
         categoryBrandRelationService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
+    }
+
+    /**
+     * mallproduct/categorybrandrelation/brands/list
+     * 1.Controller:处理请求、接受和校验数据
+     * 2.Service接受Controller传来的数据，进行业务处理
+     * 3.Controller接受Service处理的数据，页面进行封装
+     *
+     * @param catelog_Id :分类id
+     * @return :品牌数据集
+     */
+    @GetMapping("/brands/list")
+    public Result relationBrandsList(@RequestParam(value = "catId") Long catelog_Id) {
+        List<BrandEntity> list = categoryBrandRelationService.getBrandsByCatId(catelog_Id);
+        List<BrandVo> rtnList = list.stream().map(item -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(item.getBrandId());
+            brandVo.setBrandName(item.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+        return Result.ok().put("data", rtnList);
     }
 
 }
