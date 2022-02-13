@@ -249,34 +249,40 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
      */
     @Override
     public PageUtils getNoRelationAttr(Long attrgroupId, Map<String, Object> params) {
-        //1.获取当前<属性分组>中对应的pms_category的主键
-        //1.1.根据<属性&属性分组关联表的主键id>查询pms_attr_group对应的数据
+        //1.根据attrgroupId获取对应<属性分组pms_attr_group>表中的数据，再获取分类主键category_id（pms_category的主键）
+        //1.1.根据attrgroupId查询<属性分组pms_attr_group>表的数据
         AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
-        //1.2.获取<属性&属性分组关联表>中的分类主键id（pms_category的主键）
+        //1.2.根据查询出的<属性分组pms_attr_group>表的数据获取分类主键category_id（pms_category的主键）
         Long catelogId = attrGroupEntity.getCatelogId();
 
         //2.获取当前<属性分组>只能关联别的<属性分组>没有引用的属性
-        //2.1.获取当前分类下的所有的<属性&属性分组关联表>数据
-        List<AttrGroupEntity> groupEntityList = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
-        //2.2.获取当前分类下的所有<属性&属性分组关联表>数据的属性分组id（主键），即已经关联当前分类所有属性分组
+        //2.1.获取<属性分组pms_attr_group>中分类id（category_id）为当前分类下的的所有数据
+        QueryWrapper<AttrGroupEntity> groupEntityQueryWrapper = new QueryWrapper<>();
+        groupEntityQueryWrapper.eq("catelog_id", catelogId);
+        List<AttrGroupEntity> groupEntityList = attrGroupDao.selectList(groupEntityQueryWrapper);
+        //2.2.收集当前分类下的所有<属性分组表>数据的属性分组id，即属性分组关联表（pms_attr_attrgroup_relation）表的attr_group_id属性
         List<Long> attrGroupIdList = groupEntityList.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
-        //2.3.根据<当前分类所有属性分组的id>的数据从<属性&属性分组关联表>查询所有<属性&属性分组关联表>的关联数据
-        List<AttrAttrgroupRelationEntity> attrgroupRelationEntityList = attrAttrgroupRelationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", attrGroupIdList));
+        //2.3.查询分组关联表（pms_attr_attrgroup_relation）表的attr_group_id属性为attrGroupIdList的所有数据
+        QueryWrapper<AttrAttrgroupRelationEntity> attrgroupRelationQueryWrapper = new QueryWrapper<>();
+        attrgroupRelationQueryWrapper.in("attr_group_id", attrGroupIdList);
+        List<AttrAttrgroupRelationEntity> attrgroupRelationEntityList = attrAttrgroupRelationDao.selectList(attrgroupRelationQueryWrapper);
         //2.4.根据<属性&属性分组关联表>的数据获取当前分类下所有的属性id（主键）
         List<Long> attrIds = attrgroupRelationEntityList.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
         //2.5.获取<当前分类catelog_id> && <移除已经绑定了关联属性分组的属性> 所有属性
-        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelogId).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("catelog_id", catelogId);
+        queryWrapper.eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
         if (attrIds.size() > 0) {
             queryWrapper.notIn("attr_id", attrIds);
         }
-
-        //3.查询对应的数据
+        //2.6.如果有关键字查询，加上关键字模糊查询
         String key = StrUtil.trim(params.get("key"));
         if (!StrUtil.isEmpty(key)) {
             queryWrapper.and((w) -> {
                 w.eq("attr_id", key).or().like("attr_name", key);
             });
         }
+        //3.查询对应的数据
         IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
         return new PageUtils(page);
     }
