@@ -88,7 +88,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
      */
     @Override
     public PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String attrType) {
-        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("attr_type", "base".equalsIgnoreCase(attrType) ? ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() : ProductConstant.AttrEnum.ATTR_TYPE_SALE.getCode());
+        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attr_type", "base".equalsIgnoreCase(attrType) ? ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() : ProductConstant.AttrEnum.ATTR_TYPE_SALE.getCode());
         //1.如果分组id为0,则表示分组id不作为条件查询所有的属性
         if (catelogId != 0) {
             queryWrapper.eq("catelog_id", catelogId);
@@ -114,7 +115,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             // 3.3.查询出关联pms_attr的pms_category的名字，他们通过中间表pms_attr_attrgroup_relation关联
             // 仅为规格属性为base时查询关联属性组表
             if ("base".equalsIgnoreCase(attrType)) {
-                AttrAttrgroupRelationEntity attrgroupRelationEntity = attrAttrgroupRelationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));
+                QueryWrapper<AttrAttrgroupRelationEntity> queryWrapper1 = new QueryWrapper<>();
+                queryWrapper1.eq("attr_id", attrEntity.getAttrId());
+                AttrAttrgroupRelationEntity attrgroupRelationEntity = attrAttrgroupRelationDao.selectOne(queryWrapper1);
                 if (attrgroupRelationEntity != null && attrgroupRelationEntity.getAttrGroupId() != null) {
                     AttrGroupEntity attrGroup = attrGroupDao.selectById(StrUtil.trim(attrgroupRelationEntity.getAttrGroupId()));
                     attrRespVo.setGroupName(attrGroup.getAttrGroupName());
