@@ -11,6 +11,7 @@ import com.stonebridge.mallproduct.service.AttrAttrgroupRelationService;
 import com.stonebridge.mallproduct.service.AttrService;
 import com.stonebridge.mallproduct.service.CategoryService;
 import com.stonebridge.mallproduct.vo.AttrGroupRelationVo;
+import com.stonebridge.mallproduct.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,17 +31,34 @@ import com.common.utils.Result;
 @RestController
 @RequestMapping("mallproduct/attrgroup")
 public class AttrGroupController {
-    @Autowired
+
     private AttrGroupService attrGroupService;
 
-    @Autowired
     private CategoryService categoryService;
 
-    @Autowired
     AttrService attrService;
 
-    @Autowired
     AttrAttrgroupRelationService relationService;
+
+    @Autowired
+    public void setAttrGroupService(AttrGroupService attrGroupService) {
+        this.attrGroupService = attrGroupService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @Autowired
+    public void setAttrService(AttrService attrService) {
+        this.attrService = attrService;
+    }
+
+    @Autowired
+    public void setRelationService(AttrAttrgroupRelationService relationService) {
+        this.relationService = relationService;
+    }
 
     /**
      * 列表
@@ -146,5 +164,20 @@ public class AttrGroupController {
         }).collect(Collectors.toList());
         relationService.saveBatch(attrgroupRelationEntityList);
         return Result.ok();
+    }
+
+    /**
+     * api/mallproduct/attrgroup/225/withattr
+     * 根据分类id查询出对应的所有属性分组，再查询出每个分组下的所有属性
+     *
+     * @param catelogId :分类id
+     * @return ：查询结果集
+     */
+    @GetMapping("/{catelogId}/withattr")
+    public Result getAttrGroupWithAttrs(@PathVariable("catelogId") String catelogId) {
+        //1.查出该分类下的所有属性分组
+        //2.查出每个属性分组的所有属性
+        List<AttrGroupWithAttrsVo> list = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return Result.ok().put("data", list);
     }
 }
