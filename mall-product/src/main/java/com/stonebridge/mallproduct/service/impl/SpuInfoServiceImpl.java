@@ -1,8 +1,10 @@
 package com.stonebridge.mallproduct.service.impl;
 
 import com.stonebridge.mallproduct.vo.SpuSaveVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -29,6 +31,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void saveSpuInfo(SpuSaveVo spuSaveVo) {
         //1.保存spu的基本信息 pms_spu_info
+        SpuInfoEntity infoEntity = new SpuInfoEntity();
+        BeanUtils.copyProperties(spuSaveVo, infoEntity);
+        infoEntity.setCreateTime(new Date());
+        infoEntity.setUpdateTime(new Date());
+        this.saveBaseSpuInfo(infoEntity);
         //2.保存spu的描述图片 pms_spu_info_desc
         //3.保存spu的图片集 pms_spu_images
         //4.保存spu的规格参数pms_product_attr_value
@@ -38,5 +45,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         //6.2.sku的图片信息pms_sku_images
         //6.3.sku的销售属性信息pms_sku_sale_attr_value
         //6.4.sku的优惠、满减等信息；gulimall_sms->sms_sku_ladder(sku打折表)\sms_sku_full_reduction(满减表)\sms_member_price(会员价格表)
+    }
+
+    @Override
+    public void saveBaseSpuInfo(SpuInfoEntity infoEntity) {
+        this.baseMapper.insert(infoEntity);
     }
 }
