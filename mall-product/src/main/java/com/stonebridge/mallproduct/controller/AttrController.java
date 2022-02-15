@@ -42,6 +42,7 @@ public class AttrController {
 
     /**
      * 查询查询条件查询属性表（pms_attr）的数据
+     * mallproduct/attr/base/list/225
      *
      * @param params    ：参数
      * @param catelogId ：分类的id（pms_category.id）

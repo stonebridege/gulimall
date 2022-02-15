@@ -3,6 +3,7 @@ package com.stonebridge.mallproduct.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.stonebridge.mallproduct.vo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,9 +55,8 @@ public class SpuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public Result save(@RequestBody SpuInfoEntity spuInfo) {
-        spuInfoService.save(spuInfo);
-
+    public Result save(@RequestBody SpuSaveVo spuSaveVo) {
+        spuInfoService.saveSpuInfo(spuSaveVo);
         return Result.ok();
     }
 
