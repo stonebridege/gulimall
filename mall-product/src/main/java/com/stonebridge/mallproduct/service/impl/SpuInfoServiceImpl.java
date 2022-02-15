@@ -1,10 +1,14 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.stonebridge.mallproduct.entity.SpuInfoDescEntity;
+import com.stonebridge.mallproduct.service.SpuInfoDescService;
 import com.stonebridge.mallproduct.vo.SpuSaveVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,6 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("spuInfoService")
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
+
+    SpuInfoDescService spuInfoDescService;
+
+    @Autowired
+    public void setSpuInfoDescService(SpuInfoDescService spuInfoDescService) {
+        this.spuInfoDescService = spuInfoDescService;
+    }
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -37,6 +48,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         infoEntity.setUpdateTime(new Date());
         this.saveBaseSpuInfo(infoEntity);
         //2.保存spu的描述图片 pms_spu_info_desc
+        List<String> decripts = spuSaveVo.getDecript();
+        SpuInfoDescEntity descEntity = new SpuInfoDescEntity();
+        descEntity.setSpuId(infoEntity.getId());
+        descEntity.setDecript(String.join(",", decripts));
+        spuInfoDescService.saveSpuInfoDesc(descEntity);
         //3.保存spu的图片集 pms_spu_images
         //4.保存spu的规格参数pms_product_attr_value
         //5.保存spu的积分信息；gulimall_sms->sms_spu_bounds
