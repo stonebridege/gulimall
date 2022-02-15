@@ -1,6 +1,7 @@
 package com.stonebridge.mallproduct.service.impl;
 
 import com.stonebridge.mallproduct.entity.SpuInfoDescEntity;
+import com.stonebridge.mallproduct.service.SpuImagesService;
 import com.stonebridge.mallproduct.service.SpuInfoDescService;
 import com.stonebridge.mallproduct.vo.SpuSaveVo;
 import org.springframework.beans.BeanUtils;
@@ -21,15 +22,21 @@ import com.stonebridge.mallproduct.entity.SpuInfoEntity;
 import com.stonebridge.mallproduct.service.SpuInfoService;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service("spuInfoService")
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
 
     SpuInfoDescService spuInfoDescService;
 
+    SpuImagesService spuImagesService;
+
     @Autowired
     public void setSpuInfoDescService(SpuInfoDescService spuInfoDescService) {
         this.spuInfoDescService = spuInfoDescService;
+    }
+
+    @Autowired
+    public void setSpuImagesService(SpuImagesService spuImagesService) {
+        this.spuImagesService = spuImagesService;
     }
 
     @Override
@@ -54,6 +61,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         descEntity.setDecript(String.join(",", decripts));
         spuInfoDescService.saveSpuInfoDesc(descEntity);
         //3.保存spu的图片集 pms_spu_images
+        List<String> images = spuSaveVo.getImages();
+        spuImagesService.saveImages(infoEntity.getId(), images);
+
+
         //4.保存spu的规格参数pms_product_attr_value
         //5.保存spu的积分信息；gulimall_sms->sms_spu_bounds
         //6.保存当前SPU对应的SKU信息；
@@ -63,6 +74,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         //6.4.sku的优惠、满减等信息；gulimall_sms->sms_sku_ladder(sku打折表)\sms_sku_full_reduction(满减表)\sms_member_price(会员价格表)
     }
 
+    /**
+     * 保存spu的基本信息 pms_spu_info
+     *
+     * @param infoEntity SpuInfoEntity对象
+     */
     @Override
     public void saveBaseSpuInfo(SpuInfoEntity infoEntity) {
         this.baseMapper.insert(infoEntity);
