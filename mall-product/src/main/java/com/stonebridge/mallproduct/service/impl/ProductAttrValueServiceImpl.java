@@ -2,6 +2,7 @@ package com.stonebridge.mallproduct.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -26,6 +27,16 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
         );
 
         return new PageUtils(page);
+    }
+
+    /**
+     * 保存spu的规格参数pms_product_attr_value
+     *
+     * @param list
+     */
+    @Override
+    public void saveProductAttr(List<ProductAttrValueEntity> list) {
+        this.saveBatch(list);
     }
 
 }
