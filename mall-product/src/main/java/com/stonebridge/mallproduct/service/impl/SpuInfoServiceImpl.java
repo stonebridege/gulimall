@@ -1,7 +1,9 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.common.to.SpuBoundTo;
 import com.common.utils.StrUtil;
 import com.stonebridge.mallproduct.entity.*;
+import com.stonebridge.mallproduct.feign.CouponFeignService;
 import com.stonebridge.mallproduct.service.*;
 import com.stonebridge.mallproduct.vo.*;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +39,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     SkuImagesService skuImagesService;
 
     SkuSaleAttrValueService skuSaleAttrValueService;
+
+    CouponFeignService couponFeignService;
+
+    @Autowired
+    public void setCouponFeignService(CouponFeignService couponFeignService) {
+        this.couponFeignService = couponFeignService;
+    }
 
     @Autowired
     public void setSkuInfoService(SkuInfoService skuInfoService) {
@@ -109,7 +118,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return valueEntity;
         }).collect(Collectors.toList());
         valueService.saveProductAttr(list);
-        //5.保存spu的积分信息；gulimall_sms->sms_spu_bounds
+        //5.保存spu的积分信息；gulimall_product通过feign调用sms_spu_bounds完成保存
+        Bounds bounds = spuSaveVo.getBounds();
+        SpuBoundTo spuBoundTo = new SpuBoundTo();
+        BeanUtils.copyProperties(bounds, spuBoundTo);
+        spuBoundTo.setSpuId(infoEntity.getId());
+        couponFeignService.saveSpuBounds(spuBoundTo);
         //6.保存当前SPU对应的SKU信息
         List<Skus> skusList = spuSaveVo.getSkus();
         if (!skusList.isEmpty()) {
