@@ -1,6 +1,8 @@
 package com.stonebridge.mallproduct.service.impl;
 
+import com.common.to.SkuReductionTo;
 import com.common.to.SpuBoundTo;
+import com.common.utils.Result;
 import com.common.utils.StrUtil;
 import com.stonebridge.mallproduct.entity.*;
 import com.stonebridge.mallproduct.feign.CouponFeignService;
@@ -123,7 +125,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         SpuBoundTo spuBoundTo = new SpuBoundTo();
         BeanUtils.copyProperties(bounds, spuBoundTo);
         spuBoundTo.setSpuId(infoEntity.getId());
-        couponFeignService.saveSpuBounds(spuBoundTo);
+        Result result = couponFeignService.saveSpuBounds(spuBoundTo);
+        if (result.getCode() != 0) {
+            log.error("远程保存spu积分信息失败");
+        }
         //6.保存当前SPU对应的SKU信息
         List<Skus> skusList = spuSaveVo.getSkus();
         if (!skusList.isEmpty()) {
@@ -168,6 +173,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 //6.3.sku的销售属性信息pms_sku_sale_attr_value
                 skuSaleAttrValueService.saveBatch(skuSaleAttrValueEntities);
                 //6.4.sku的优惠、满减等信息；gulimall_sms->sms_sku_ladder(sku打折表)\sms_sku_full_reduction(满减表)\sms_member_price(会员价格表)
+                SkuReductionTo skuReductionTo = new SkuReductionTo();
+                BeanUtils.copyProperties(item, skuReductionTo);
+                skuReductionTo.setSkuId(skuId);
+                Result result1 = couponFeignService.saveSkuReduction(skuReductionTo);
+                if (result1.getCode() != 0) {
+                    log.error("远程保存sku优惠信息失败");
+                }
             });
         }
     }

@@ -52,11 +52,8 @@ public class SpuBoundsController {
      * 保存
      */
     @PostMapping("/save")
-    public Result save(@RequestBody SpuBoundTo spuBoundTo) {
-        SpuBoundsEntity spuBounds = new SpuBoundsEntity();
-        BeanUtils.copyProperties(spuBoundTo, spuBounds);
+    public Result save(@RequestBody SpuBoundsEntity spuBounds) {
         spuBoundsService.save(spuBounds);
-
         return Result.ok();
     }
 

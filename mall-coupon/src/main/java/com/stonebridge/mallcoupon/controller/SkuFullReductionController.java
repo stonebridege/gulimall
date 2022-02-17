@@ -3,12 +3,9 @@ package com.stonebridge.mallcoupon.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.common.to.SkuReductionTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallcoupon.entity.SkuFullReductionEntity;
 import com.stonebridge.mallcoupon.service.SkuFullReductionService;
@@ -28,6 +25,12 @@ import com.common.utils.Result;
 public class SkuFullReductionController {
     @Autowired
     private SkuFullReductionService skuFullReductionService;
+
+    @PostMapping("/saveinfo")
+    public Result saveInfo(@RequestBody SkuReductionTo skuReductionTo) {
+        skuFullReductionService.saveSkuReduction(skuReductionTo);
+        return Result.ok();
+    }
 
     /**
      * 列表

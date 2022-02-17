@@ -1,5 +1,6 @@
 package com.stonebridge.mallproduct.feign;
 
+import com.common.to.SkuReductionTo;
 import com.common.to.SpuBoundTo;
 import com.common.utils.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,4 +23,7 @@ public interface CouponFeignService {
      */
     @PostMapping("/mallcoupon/spubounds/save")
     Result saveSpuBounds(@RequestBody SpuBoundTo spuBoundTo);
+
+    @PostMapping("/mallcoupon/skufullreduction/saveinfo")
+    Result saveSkuReduction(@RequestBody SkuReductionTo skuReductionTo);
 }

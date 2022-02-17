@@ -1,6 +1,7 @@
 package com.stonebridge.mallcoupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.common.to.SkuReductionTo;
 import com.common.utils.PageUtils;
 import com.stonebridge.mallcoupon.entity.SkuFullReductionEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SkuFullReductionService extends IService<SkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSkuReduction(SkuReductionTo skuReductionTo);
 }
 
