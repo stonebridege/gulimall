@@ -32,15 +32,26 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     ProductAttrValueService valueService;
 
-    @Autowired
     SkuInfoService skuInfoService;
 
-    @Autowired
     SkuImagesService skuImagesService;
 
-    @Autowired
     SkuSaleAttrValueService skuSaleAttrValueService;
 
+    @Autowired
+    public void setSkuInfoService(SkuInfoService skuInfoService) {
+        this.skuInfoService = skuInfoService;
+    }
+
+    @Autowired
+    public void setSkuImagesService(SkuImagesService skuImagesService) {
+        this.skuImagesService = skuImagesService;
+    }
+
+    @Autowired
+    public void setSkuSaleAttrValueService(SkuSaleAttrValueService skuSaleAttrValueService) {
+        this.skuSaleAttrValueService = skuSaleAttrValueService;
+    }
 
     @Autowired
     public void setValueService(ProductAttrValueService valueService) {
@@ -109,10 +120,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                         defaultImg = image.getImgUrl();
                     }
                 }
-                //private String skuName;
-                //private BigDecimal price;
-                //private String skuTitle;
-                //private String skuSubtitle;
+                //skuName、price、skuTitle、skuSubtitle
                 SkuInfoEntity skuInfoEntity = new SkuInfoEntity();
                 BeanUtils.copyProperties(item, skuInfoEntity);
                 skuInfoEntity.setBrandId(infoEntity.getBrandId());
