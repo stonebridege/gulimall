@@ -60,15 +60,17 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
         this.save(skuFullReduction);
         //3.sms_member_price(会员价格表)
         List<MemberPrice> memberPrices = skuReductionTo.getMemberPrice();
-        List<MemberPriceEntity> list = memberPrices.stream().map(item -> {
-            MemberPriceEntity memberPriceEntity = new MemberPriceEntity();
-            memberPriceEntity.setSkuId(skuReductionTo.getSkuId());
-            memberPriceEntity.setMemberLevelId(item.getId());
-            memberPriceEntity.setMemberLevelName(item.getName());
-            memberPriceEntity.setMemberPrice(item.getPrice());
-            memberPriceEntity.setAddOther(1);
-            return memberPriceEntity;
-        }).collect(Collectors.toList());
-        memberPriceService.saveBatch(list);
+        if (memberPrices!=null&&!memberPrices.isEmpty()){
+            List<MemberPriceEntity> list = memberPrices.stream().map(item -> {
+                MemberPriceEntity memberPriceEntity = new MemberPriceEntity();
+                memberPriceEntity.setSkuId(skuReductionTo.getSkuId());
+                memberPriceEntity.setMemberLevelId(item.getId());
+                memberPriceEntity.setMemberLevelName(item.getName());
+                memberPriceEntity.setMemberPrice(item.getPrice());
+                memberPriceEntity.setAddOther(1);
+                return memberPriceEntity;
+            }).collect(Collectors.toList());
+            memberPriceService.saveBatch(list);
+        }
     }
 }
