@@ -3,6 +3,7 @@ package com.stonebridge.mallware.service.impl;
 import com.common.utils.StrUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -38,5 +39,13 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
         }
         IPage<PurchaseDetailEntity> page = this.page(new Query<PurchaseDetailEntity>().getPage(params), queryWrapper);
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<PurchaseDetailEntity> listDetailByPurchaseId(Long id) {
+        QueryWrapper<PurchaseDetailEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("purchase_id", id);
+        List<PurchaseDetailEntity> list = this.list(wrapper);
+        return list;
     }
 }

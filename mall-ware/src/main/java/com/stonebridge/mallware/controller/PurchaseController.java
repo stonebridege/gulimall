@@ -2,6 +2,7 @@ package com.stonebridge.mallware.controller;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.stonebridge.mallware.Vo.MergeVo;
@@ -12,7 +13,6 @@ import com.stonebridge.mallware.entity.PurchaseEntity;
 import com.stonebridge.mallware.service.PurchaseService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
-
 
 /**
  * 采购信息
@@ -34,6 +34,17 @@ public class PurchaseController {
     }
 
     /**
+     * 领取采购单
+     * http://localhost:88/api/mallware/purchase/received
+     * 请求参数采购单id组成的数组[1,2,3,4]、分页数据
+     */
+    @PostMapping("/received")
+    public Result received(@RequestBody List<Long> ids) {
+        purchaseService.received(ids);
+        return Result.ok();
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/unreceive/list")
@@ -51,14 +62,12 @@ public class PurchaseController {
         return Result.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */
     @RequestMapping("/info/{id}")
     public Result info(@PathVariable("id") Long id) {
         PurchaseEntity purchase = purchaseService.getById(id);
-
         return Result.ok().put("purchase", purchase);
     }
 
@@ -79,7 +88,6 @@ public class PurchaseController {
     @RequestMapping("/update")
     public Result update(@RequestBody PurchaseEntity purchase) {
         purchaseService.updateById(purchase);
-
         return Result.ok();
     }
 
@@ -89,8 +97,6 @@ public class PurchaseController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] ids) {
         purchaseService.removeByIds(Arrays.asList(ids));
-
         return Result.ok();
     }
-
 }
