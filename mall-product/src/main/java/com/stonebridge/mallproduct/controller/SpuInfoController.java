@@ -36,7 +36,6 @@ public class SpuInfoController {
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = spuInfoService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 
@@ -47,7 +46,6 @@ public class SpuInfoController {
     @RequestMapping("/info/{id}")
     public Result info(@PathVariable("id") Long id) {
         SpuInfoEntity spuInfo = spuInfoService.getById(id);
-
         return Result.ok().put("spuInfo", spuInfo);
     }
 
@@ -66,7 +64,6 @@ public class SpuInfoController {
     @RequestMapping("/update")
     public Result update(@RequestBody SpuInfoEntity spuInfo) {
         spuInfoService.updateById(spuInfo);
-
         return Result.ok();
     }
 
@@ -76,8 +73,6 @@ public class SpuInfoController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] ids) {
         spuInfoService.removeByIds(Arrays.asList(ids));
-
         return Result.ok();
     }
-
 }
