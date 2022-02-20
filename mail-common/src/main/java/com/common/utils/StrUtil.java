@@ -202,6 +202,24 @@ public class StrUtil {
         return flag;
     }
 
+    /**
+     * 判断字符串不为空
+     *
+     * @param str 输入字符串
+     * @return 返回结算结果
+     */
+    public static boolean isNotEmpty(String str) {
+        boolean flag = true;
+        if (str == null) {
+            flag = false;
+        } else if (trim(str).length() == 0) {
+            flag = false;
+        } else if (str.equals("null")) {
+            flag = false;
+        }
+        return flag;
+    }
+
 
     /**
      * 获取X位随机数

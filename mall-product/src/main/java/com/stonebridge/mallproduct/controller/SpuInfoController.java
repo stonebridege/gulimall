@@ -35,7 +35,7 @@ public class SpuInfoController {
      */
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
-        PageUtils page = spuInfoService.queryPage(params);
+        PageUtils page = spuInfoService.queryPageByCondition(params);
         return Result.ok().put("page", page);
     }
 
