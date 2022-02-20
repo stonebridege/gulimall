@@ -33,7 +33,6 @@ public class PurchaseDetailController {
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = purchaseDetailService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 
