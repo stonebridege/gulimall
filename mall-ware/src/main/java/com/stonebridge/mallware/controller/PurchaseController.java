@@ -1,14 +1,12 @@
 package com.stonebridge.mallware.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import com.stonebridge.mallware.Vo.MergeVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallware.entity.PurchaseEntity;
 import com.stonebridge.mallware.service.PurchaseService;
@@ -29,13 +27,27 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @PostMapping("merge")
+    private Result merge(@RequestBody MergeVo mergeVo) {
+        purchaseService.mergePurchase(mergeVo);
+        return Result.ok();
+    }
+
+    /**
+     * 列表
+     */
+    @RequestMapping("/unreceive/list")
+    public Result unreceiveList(@RequestParam Map<String, Object> params) {
+        PageUtils page = purchaseService.queryPageUnreceive(params);
+        return Result.ok().put("page", page);
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = purchaseService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 
@@ -55,8 +67,9 @@ public class PurchaseController {
      */
     @RequestMapping("/save")
     public Result save(@RequestBody PurchaseEntity purchase) {
+        purchase.setUpdateTime(new Date());
+        purchase.setCreateTime(new Date());
         purchaseService.save(purchase);
-
         return Result.ok();
     }
 
