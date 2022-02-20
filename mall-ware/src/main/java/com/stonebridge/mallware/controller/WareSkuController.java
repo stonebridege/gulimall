@@ -35,7 +35,6 @@ public class WareSkuController {
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareSkuService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 

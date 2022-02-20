@@ -35,7 +35,6 @@ public class WareInfoController {
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = wareInfoService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 
@@ -46,7 +45,6 @@ public class WareInfoController {
     @RequestMapping("/info/{id}")
     public Result info(@PathVariable("id") Long id) {
         WareInfoEntity wareInfo = wareInfoService.getById(id);
-
         return Result.ok().put("wareInfo", wareInfo);
     }
 
@@ -56,7 +54,6 @@ public class WareInfoController {
     @RequestMapping("/save")
     public Result save(@RequestBody WareInfoEntity wareInfo) {
         wareInfoService.save(wareInfo);
-
         return Result.ok();
     }
 
@@ -66,7 +63,6 @@ public class WareInfoController {
     @RequestMapping("/update")
     public Result update(@RequestBody WareInfoEntity wareInfo) {
         wareInfoService.updateById(wareInfo);
-
         return Result.ok();
     }
 
@@ -76,7 +72,6 @@ public class WareInfoController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] ids) {
         wareInfoService.removeByIds(Arrays.asList(ids));
-
         return Result.ok();
     }
 
