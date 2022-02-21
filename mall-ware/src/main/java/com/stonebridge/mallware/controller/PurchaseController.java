@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.stonebridge.mallware.Vo.MergeVo;
+import com.stonebridge.mallware.vo.MergeVo;
+import com.stonebridge.mallware.vo.PurchaseDoneVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,21 @@ public class PurchaseController {
     @PostMapping("/received")
     public Result received(@RequestBody List<Long> ids) {
         purchaseService.received(ids);
+        return Result.ok();
+    }
+
+    /**
+     * 完成采购
+     * http://localhost:88/api/mallware/purchase/done
+     * 请求数据：
+     * {
+     * id:1234//采购单id,
+     * items:[{itemId:1,status:4,reason:''},{itemId:1,status:4,reason:''}]
+     * }
+     */
+    @PostMapping(value = "done")
+    public Result finish(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.done(purchaseDoneVo);
         return Result.ok();
     }
 

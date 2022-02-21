@@ -1,4 +1,4 @@
-package com.stonebridge.mallware.Vo;
+package com.stonebridge.mallware.vo;
 
 import lombok.Data;
 

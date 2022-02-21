@@ -15,7 +15,6 @@ import com.stonebridge.mallproduct.service.SkuInfoService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
 
-
 /**
  * sku信息
  *
@@ -38,14 +37,12 @@ public class SkuInfoController {
         return Result.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */
     @RequestMapping("/info/{skuId}")
     public Result info(@PathVariable("skuId") Long skuId) {
         SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
-
         return Result.ok().put("skuInfo", skuInfo);
     }
 
@@ -55,7 +52,6 @@ public class SkuInfoController {
     @RequestMapping("/save")
     public Result save(@RequestBody SkuInfoEntity skuInfo) {
         skuInfoService.save(skuInfo);
-
         return Result.ok();
     }
 
@@ -65,7 +61,6 @@ public class SkuInfoController {
     @RequestMapping("/update")
     public Result update(@RequestBody SkuInfoEntity skuInfo) {
         skuInfoService.updateById(skuInfo);
-
         return Result.ok();
     }
 
@@ -75,8 +70,6 @@ public class SkuInfoController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] skuIds) {
         skuInfoService.removeByIds(Arrays.asList(skuIds));
-
         return Result.ok();
     }
-
 }
