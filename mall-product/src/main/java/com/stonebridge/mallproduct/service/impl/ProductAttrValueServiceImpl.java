@@ -15,17 +15,12 @@ import com.stonebridge.mallproduct.dao.ProductAttrValueDao;
 import com.stonebridge.mallproduct.entity.ProductAttrValueEntity;
 import com.stonebridge.mallproduct.service.ProductAttrValueService;
 
-
 @Service("productAttrValueService")
 public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao, ProductAttrValueEntity> implements ProductAttrValueService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<ProductAttrValueEntity> page = this.page(
-                new Query<ProductAttrValueEntity>().getPage(params),
-                new QueryWrapper<ProductAttrValueEntity>()
-        );
-
+        IPage<ProductAttrValueEntity> page = this.page(new Query<ProductAttrValueEntity>().getPage(params), new QueryWrapper<>());
         return new PageUtils(page);
     }
 
@@ -39,4 +34,10 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
         this.saveBatch(list);
     }
 
+    @Override
+    public List<ProductAttrValueEntity> baseAttrListForspu(Long spuId) {
+        QueryWrapper<ProductAttrValueEntity> queryWrapper = new QueryWrapper<>();
+        this.baseMapper.selectList(queryWrapper.eq("spu_id", spuId));
+        return null;
+    }
 }

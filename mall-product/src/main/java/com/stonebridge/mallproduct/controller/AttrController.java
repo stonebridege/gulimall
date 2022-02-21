@@ -1,21 +1,19 @@
 package com.stonebridge.mallproduct.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.stonebridge.mallproduct.entity.ProductAttrValueEntity;
+import com.stonebridge.mallproduct.service.ProductAttrValueService;
 import com.stonebridge.mallproduct.vo.AttrRespVo;
 import com.stonebridge.mallproduct.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stonebridge.mallproduct.service.AttrService;
 import com.common.utils.PageUtils;
 import com.common.utils.Result;
-
 
 /**
  * 商品属性
@@ -30,13 +28,22 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+    @Autowired
+    ProductAttrValueService productAttrValueService;
+
+    //mallproduct/attr/base/listforspu/7
+    @GetMapping("base/listforspu/{spuId}")
+    public Result baseAttrList(@PathVariable("spuId") Long spuId) {
+        List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrListForspu(spuId);
+        return Result.ok().put("data", entities);
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = attrService.queryPage(params);
-
         return Result.ok().put("page", page);
     }
 
@@ -75,7 +82,6 @@ public class AttrController {
     @RequestMapping("/save")
     public Result save(@RequestBody AttrVo attr) {
         attrService.saveAttr(attr);
-
         return Result.ok();
     }
 
@@ -94,8 +100,6 @@ public class AttrController {
     @RequestMapping("/delete")
     public Result delete(@RequestBody Long[] attrIds) {
         attrService.removeByIds(Arrays.asList(attrIds));
-
         return Result.ok();
     }
-
 }
