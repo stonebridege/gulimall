@@ -38,6 +38,13 @@ public class AttrController {
         return Result.ok().put("data", entities);
     }
 
+    //mallproduct/attr/update/1
+    @PostMapping("/update/{spuId}")
+    public Result updateSpuAtt(@PathVariable Long spuId, @RequestBody List<ProductAttrValueEntity> list) {
+        productAttrValueService.updateSpuAttr(spuId, list);
+        return Result.ok();
+    }
+
     /**
      * 列表
      */
